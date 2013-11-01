@@ -1,0 +1,27 @@
+body{
+	padding-top:70px;
+}
+
+/***** Typography *****/
+.meta{
+}
+
+/***** Interface *****/
+.user.btn{
+	width:100px;
+	}
+	
+/***** Layout *****/
+.box{
+	border:1px solid #ddd;
+	margin:10px;
+}
+
+/***** User *****/
+	
+.avatar{
+	height:50px;
+	width:50px;
+	float:left;
+	margin:5px;
+}
