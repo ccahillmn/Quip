@@ -12,7 +12,7 @@
 					<strong>+1 Features</strong>
 				</div>
 				<ul class="list-group">
-					<li class="list-group-item">Feature 1</li>
+					<li class="list-group-item">Delete a post</li>
 					<li class="list-group-item">Feature 2</li>
 				</ul>
 			</div>

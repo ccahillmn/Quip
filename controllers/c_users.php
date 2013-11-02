@@ -60,9 +60,7 @@ class users_controller extends base_controller {
 			'SELECT token 
 			FROM users
 			WHERE email = "'.$_POST['email'].'"
-			AND password = "'.$_POST['password'].'"';
-		
-		echo $q;	
+			AND password = "'.$_POST['password'].'"';	
 		
 		# If there was, this will return the token	   
 		$token = DB::instance(DB_NAME)->select_field($q);
@@ -110,14 +108,15 @@ class users_controller extends base_controller {
 	-------------------------------------------------------------------------------------------------*/
     public function profile($user_name = NULL) {
 		
-		# Only logged in users are allowed...
+		# Route unauthenticated users to home with notifcation
 		if(!$this->user) {
-			Router::redirect('/?note=NotLogged');
+			Router::redirect('/?acct=false');
 		}
 		
 		# Set up the View
 		$this->template->content = View::instance('v_users_profile');
 		$this->template->title   = "Profile";
+		
 				
 		# Pass the data to the View
 		$this->template->content->user_name = $user_name;
