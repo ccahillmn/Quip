@@ -35,6 +35,7 @@ footer{
 }
 
 /***** Layout *****/
+
 .box{
 	border:1px solid #ddd;
 	margin:10px;
@@ -44,7 +45,7 @@ hr{
 	margin-top:10px;
 }
 
-#login_form{
+#login_form, .alert{
 	margin:auto;
 	max-width:550px;
 }

@@ -29,7 +29,7 @@ class users_controller extends base_controller {
 	    DB::instance(DB_NAME)->insert_row('users', $_POST);
 	    
 	    # Send them to the login page
-	    Router::redirect('/users/login');
+	    Router::redirect('/users/login/?acct=new');
 	    
     }
 	
@@ -38,7 +38,11 @@ class users_controller extends base_controller {
 	-------------------------------------------------------------------------------------------------*/
     public function login() {
     
-    	$this->template->content = View::instance('v_users_login');    	
+    	$this->template->content = View::instance('v_users_login'); 
+
+		# Provide sign-up option for those who landed on the wrong page
+		$this->template->content->signup = View::instance('v_users_signup');
+		
     	echo $this->template;   
        
     }
@@ -99,6 +103,28 @@ class users_controller extends base_controller {
        # Send them back to the homepage
        Router::redirect('/');
        
+    }
+	
+	/*-------------------------------------------------------------------------------------------------
+	User's Profile
+	-------------------------------------------------------------------------------------------------*/
+    public function profile($user_name = NULL) {
+		
+		# Only logged in users are allowed...
+		if(!$this->user) {
+			Router::redirect('/?note=NotLogged');
+		}
+		
+		# Set up the View
+		$this->template->content = View::instance('v_users_profile');
+		$this->template->title   = "Profile";
+				
+		# Pass the data to the View
+		$this->template->content->user_name = $user_name;
+		
+		# Display the view
+		echo $this->template;
+				
     }
 	
 } # end of the class

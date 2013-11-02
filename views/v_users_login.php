@@ -1,3 +1,11 @@
+<!-- If account is new, post alert to show successful account creation -->
+<?php if(isset($_GET['acct'])): ?>
+	<div class="alert alert-success alert-dismissable">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		<strong>Account successfully created! </strong> Please login to access your account.
+	</div>
+<?php endif; ?>
+
 <div id="login_form">
 	<h1>Login</h1>
 	<form role="form" method='POST' action='/users/p_login/'>
@@ -17,4 +25,10 @@
 		</div>
 		<button type="submit" class="btn btn-success btn-lg pull-right">Login</button>
 	</form>
+	<p>Don't have an account? <a data-toggle="modal" href="#signup">Sign up</a> today!</p>
 </div>
+
+<!-- Sign-up form modal -->
+<?=$signup?>
+
+

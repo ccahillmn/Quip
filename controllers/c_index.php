@@ -24,7 +24,10 @@ class index_controller extends base_controller {
 			$this->template->content = View::instance('v_index_index');
 			
 		# Now set the <title> tag
-			$this->template->title = "Hello World";
+			$this->template->title = "Quip - a microblog for hipsters, because Twitter is too mainstream";
+			
+		# Sign-up form for modal
+		$this->template->content->signup = View::instance('v_users_signup');
 	
 		# CSS/JS includes
 			/*
