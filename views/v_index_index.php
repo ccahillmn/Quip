@@ -13,7 +13,7 @@
 				</div>
 				<ul class="list-group">
 					<li class="list-group-item">Delete a post</li>
-					<li class="list-group-item">Feature 2</li>
+					<li class="list-group-item">Edit and display basic profile info</li>
 				</ul>
 			</div>
 		</div>

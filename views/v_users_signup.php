@@ -9,7 +9,7 @@
 				<form  role="form" method='POST' action='/users/p_signup/'>
 					<div class="form-group">
 						<label for="first_name">First Name</label>
-						<input type="text" class="form-control" id="exampleInputEmail2" placeholder="First Name">
+						<input type="text" class="form-control" name="first_name" id="exampleInputEmail2" placeholder="First Name">
 					</div>
 					<div class="form-group">
 						<label for="last_name">Last Name</label>
