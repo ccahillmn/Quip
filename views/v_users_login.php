@@ -10,7 +10,7 @@
 	<h1>Login</h1>
 	<form role="form" method='POST' action='/users/p_login/'>
 		<div class="form-group">
-			<label for="email">Email address</label>
+			<label for="email">Email</label>
 			<div class="input-group input-group-lg">
 				<span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
 				<input name="email" type="email" class="form-control" placeholder="Email">
@@ -28,7 +28,7 @@
 	<p>Don't have an account? <a data-toggle="modal" href="#signup">Sign up</a> today!</p>
 </div>
 
-<!-- Sign-up form modal -->
+<!-- Sign-up form modal for link on login form-->
 <?=$signup?>
 
 

@@ -3,11 +3,11 @@
 	<div id="sidebar" class="col-xs-6 col-md-4">
 		<!-- User Profile -->
 		<div class="box">
-			<?$user?>
+			<?=$user_sum?>
 		</div>
 		<!-- Add a post -->
 		<div class="box">
-			<?$addpost?>
+			<?=$addpost?>
 		</div>
 	</div>
 	

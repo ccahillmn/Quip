@@ -2,11 +2,14 @@ body{
 	padding-top:70px;
 }
 
+.clear{
+	clear:both;
+}
+
 /***** Typography *****/
 
 p{
 	text-align:justify;
-	margin-bottom:20px
 }
 
 .meta{
@@ -14,6 +17,9 @@ p{
 
 footer{
 	text-align:center;
+	position:absolute;
+	bottom:20px;
+	width:100%;
 }
 
 .glyphicon{
@@ -42,6 +48,7 @@ footer{
 }
 
 hr{
+	clear:both;
 	margin-top:10px;
 }
 

@@ -1,4 +1,3 @@
-
 <div id="pitch" class="container">
 	<h1><img class="logo" src="/images/logo.png"/>Welcome to Quip!</h1>
 	<hr/>
