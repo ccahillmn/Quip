@@ -7,6 +7,11 @@ class index_controller extends base_controller {
 	-------------------------------------------------------------------------------------------------*/
 	public function __construct() {
 		parent::__construct();
+		
+		# if user is logged in, send to posts
+		if($this->user) {
+			Router::redirect('/posts/');
+		}
 	} 
 		
 	/*-------------------------------------------------------------------------------------------------

@@ -8,6 +8,11 @@ class users_controller extends base_controller {
     
     	# Make sure the base controller construct gets called
 		parent::__construct();
+		
+		# Limit access to authenticated users
+		if(!$this->user) {
+			Router::redirect('/');
+		}
     } 
 	
 	/*-------------------------------------------------------------------------------------------------
