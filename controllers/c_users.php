@@ -78,4 +78,27 @@ class users_controller extends base_controller {
 		}
 	}
 	
+	/*-------------------------------------------------------------------------------------------------
+	No view needed here, they just goto /users/logout, it logs them out and sends them
+	back to the homepage.	
+	-------------------------------------------------------------------------------------------------*/
+    public function logout() {
+       
+       # Generate a new token they'll use next time they login
+       $new_token = sha1(TOKEN_SALT.$this->user->email.Utils::generate_random_string());
+       
+       # Update their row in the DB with the new token
+       $data = Array(
+       	'token' => $new_token
+       );
+       DB::instance(DB_NAME)->update('users',$data, 'WHERE user_id ='. $this->user->user_id);
+       
+       # Delete their old token cookie by expiring it
+       setcookie('token', '', strtotime('-1 year'), '/');
+       
+       # Send them back to the homepage
+       Router::redirect('/');
+       
+    }
+	
 } # end of the class
