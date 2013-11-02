@@ -14,7 +14,10 @@
 	<!-- Stream of posts -->
 	<div id="stream" class="col-xs-6 col-md-4">
 		<?php foreach($posts as $post): ?>
-			<?$post?>
+			<div class="post">
+				<p><?=$post['content']?><img src="/uploads/avatars/<?=$post['photo']?>" class="avatar"/></p>
+				<p class="meta">Posted by <em><?=$post['first_name']?></em> on <?=Time::display($post['created'])?></p>
+			</div>
 		<?php endforeach; ?>
 	</div>
 	

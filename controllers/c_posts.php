@@ -30,7 +30,8 @@ class posts_controller extends base_controller {
 			    posts.user_id AS post_user_id,
 			    users_users.user_id AS follower_id,
 			    users.first_name,
-			    users.last_name
+			    users.last_name,
+				users.photo
 			FROM posts
 			INNER JOIN users_users 
 			    ON posts.user_id = users_users.user_id_followed
@@ -48,6 +49,21 @@ class posts_controller extends base_controller {
 		
 		# Render view
 		echo $this->template;
+		
+	}
+	
+	/*-------------------------------------------------------------------------------------------------
+	Process new posts
+	-------------------------------------------------------------------------------------------------*/
+	public function p_add() {
+		
+		$_POST['user_id']  = $this->user->user_id;
+		$_POST['created']  = Time::now();
+		$_POST['modified'] = Time::now();
+		
+		DB::instance(DB_NAME)->insert('posts',$_POST);
+		
+		Router::redirect('/posts/');
 		
 	}
 	
