@@ -84,5 +84,42 @@ class posts_controller extends base_controller {
 		echo $this->template;
 		
 	}
+	
+		/*-------------------------------------------------------------------------------------------------
+	Creates a row in the users_users table representing that one user is following another
+	-------------------------------------------------------------------------------------------------*/
+	public function follow($user_id_followed) {
+	
+	    # Prepare the data array to be inserted
+	    $data = Array(
+	        "created"          => Time::now(),
+	        "user_id"          => $this->user->user_id,
+	        "user_id_followed" => $user_id_followed
+	        );
+	
+	    # Do the insert
+	    DB::instance(DB_NAME)->insert('users_users', $data);
+	
+	    # Send them back
+	    Router::redirect("/posts/users");
+	
+	}
+	
+	
+	/*-------------------------------------------------------------------------------------------------
+	Removes the specified row in the users_users table, removing the follow between two users
+	-------------------------------------------------------------------------------------------------*/
+	public function unfollow($user_id_followed) {
+	
+	    # Set up the where condition
+	    $where_condition = 'WHERE user_id = '.$this->user->user_id.' AND user_id_followed = '.$user_id_followed;
+	    
+	    # Run the delete
+	    DB::instance(DB_NAME)->delete('users_users', $where_condition);
+	
+	    # Send them back
+	    Router::redirect("/posts/users");
+	
+	}
 
 } # End of class

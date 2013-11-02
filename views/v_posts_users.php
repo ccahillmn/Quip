@@ -1,6 +1,7 @@
+	<h1 class="col-md-offset-1">Who's <span class="brand">Quipping?</span></h1>
 	<div class="row">
 	
-		<div id="sidebar" class="col-xs-6 col-md-4">
+		<div id="sidebar" class="col-xs-6 col-md-4 col-md-offset-1">
 			<!-- User Profile -->
 			<div class="box">
 				<?=$user_sum?>
