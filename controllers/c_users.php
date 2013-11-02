@@ -104,9 +104,9 @@ class users_controller extends base_controller {
     }
 	
 	/*-------------------------------------------------------------------------------------------------
-	User's Profile
+	Display User's Profile
 	-------------------------------------------------------------------------------------------------*/
-    public function profile($user_name = NULL) {
+    public function profile() {
 		
 		# Route unauthenticated users to home with notifcation
 		if(!$this->user) {
@@ -115,15 +115,24 @@ class users_controller extends base_controller {
 		
 		# Set up the View
 		$this->template->content = View::instance('v_users_profile');
-		$this->template->title   = "Profile";
-		
-				
-		# Pass the data to the View
-		$this->template->content->user_name = $user_name;
+		$this->template->title   = "Update Profile";
 		
 		# Display the view
 		echo $this->template;
 				
+    }
+	
+	/*-------------------------------------------------------------------------------------------------
+	Update User's Profile
+	-------------------------------------------------------------------------------------------------*/
+    public function p_profile() {
+	
+		#Update database with new user data
+		DB::instance(DB_NAME)->update('users',$_POST, 'WHERE user_id ='. $this->user->user_id);
+		
+		# Send them back to the homepage
+		Router::redirect('/users/profile?update=success');
+		
     }
 	
 } # end of the class

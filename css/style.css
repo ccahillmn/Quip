@@ -48,6 +48,9 @@ footer{
 }
 
 /***** Layout *****/
+form{
+	margin: 20px 0;
+}
 
 .box{
 	border:1px solid #ddd;
