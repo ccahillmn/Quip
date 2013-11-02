@@ -28,6 +28,7 @@ class posts_controller extends base_controller {
 			    posts.content,
 			    posts.created,
 			    posts.user_id AS post_user_id,
+				posts.post_id,
 			    users_users.user_id AS follower_id,
 			    users.first_name,
 			    users.last_name,
@@ -37,7 +38,9 @@ class posts_controller extends base_controller {
 			    ON posts.user_id = users_users.user_id_followed
 			INNER JOIN users 
 			    ON posts.user_id = users.user_id
-			WHERE users_users.user_id = '.$this->user->user_id;
+			WHERE users_users.user_id = '.$this->user->user_id . ' 
+			OR posts.user_id = '.$this->user->user_id . '
+              ORDER BY posts.created DESC';
 		
 		# Run query	
 		$posts = DB::instance(DB_NAME)->select_rows($q);
@@ -63,7 +66,22 @@ class posts_controller extends base_controller {
 		
 		DB::instance(DB_NAME)->insert('posts',$_POST);
 		
-		Router::redirect('/posts/');
+		Router::redirect('/posts');
+		
+	}
+	
+	/*-------------------------------------------------------------------------------------------------
+	Delete a post
+	-------------------------------------------------------------------------------------------------*/
+	public function delete($post_id) {
+	
+		# Set up the where condition
+	    $where_condition = 'WHERE post_id = '.$post_id;
+	    
+	    # Run the delete
+	    DB::instance(DB_NAME)->delete('posts', $where_condition);
+		
+		Router::redirect('/posts');
 		
 	}
 	
@@ -76,8 +94,9 @@ class posts_controller extends base_controller {
 		$this->template->content = View::instance('v_posts_users');
 		
 		# Set up query to get all users
-		$q = 'SELECT *
-			FROM users';
+		$q = "SELECT *
+			FROM users
+			WHERE user_id != ".$this->user->user_id;
 			
 		# Run query
 		$users = DB::instance(DB_NAME)->select_rows($q);
@@ -101,7 +120,7 @@ class posts_controller extends base_controller {
 		
 	}
 	
-		/*-------------------------------------------------------------------------------------------------
+	/*-------------------------------------------------------------------------------------------------
 	Creates a row in the users_users table representing that one user is following another
 	-------------------------------------------------------------------------------------------------*/
 	public function follow($user_id_followed) {
