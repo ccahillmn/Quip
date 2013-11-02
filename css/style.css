@@ -3,21 +3,29 @@ body{
 }
 
 /***** Typography *****/
+
+p{
+	text-align:justify;
+	margin-bottom:20px
+}
+
 .meta{
 }
 
-/***** Interface *****/
-.user.btn{
-	width:100px;
-	}
-	
-/***** Layout *****/
-.box{
-	border:1px solid #ddd;
-	margin:10px;
+footer{
+	text-align:center;
 }
 
-/***** User *****/
+.glyphicon{
+	margin:0 5px;
+}
+
+/***** Posts *****/
+.user.btn{
+	width:100px;
+}
+
+/***** Users *****/
 	
 .avatar{
 	height:50px;
@@ -25,3 +33,26 @@ body{
 	float:left;
 	margin:5px;
 }
+
+/***** Layout *****/
+.box{
+	border:1px solid #ddd;
+	margin:10px;
+}
+
+hr{
+	margin-top:10px;
+}
+
+#login_form{
+	margin:auto;
+	max-width:550px;
+}
+
+.logo{
+	margin-right:20px;
+}
+
+#pitch.container{
+	max-width:750px;
+	}

@@ -1,4 +1,4 @@
-<img src="<?=$user['photo']?>" class="avatar"/>
+<img src="<?=$user['photo']?>" class="avatar img-circle"/>
 <?=$user['first_name']?> <?=$user['last_name']?><br>
 
 <!-- if website set -->
