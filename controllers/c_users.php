@@ -127,6 +127,9 @@ class users_controller extends base_controller {
 	-------------------------------------------------------------------------------------------------*/
     public function p_profile() {
 	
+		# Sanitize user input
+		$_POST = DB::instance(DB_NAME)->sanitize($_POST);
+	
 		#if any required fields are empty, return error; else update user
 		if(empty($_POST['first_name'])||empty($_POST['last_name'])||empty($_POST['email'])){
 			Router::redirect('/users/profile?error=blank');
@@ -141,9 +144,8 @@ class users_controller extends base_controller {
 			);
 			DB::instance(DB_NAME)->update('users',$data, 'WHERE user_id ='. $this->user->user_id);
 		}
-			
 	
-		#if password field is set and matches confirmation, update password
+		# If password field is set and matches confirmation, update password
 		if(isset($_POST['password'])){
 			if($_POST['password'] == $_POST['password2']){
 				$newpw = sha1(PASSWORD_SALT.$_POST['password']);
@@ -154,6 +156,28 @@ class users_controller extends base_controller {
 			else{
 				Router::redirect('/users/profile?error=pw');
 			}
+        }
+
+		# If Remove Photo is checked, replace default avatar
+		if (isset($_POST['rm_photo'])) {
+			$data = Array("photo" => 'default.png');
+            DB::instance(DB_NAME)->update("users", $data, "WHERE user_id = ".$this->user->user_id);
+		}
+		
+		# If new photo choosen, process upload
+		elseif (file_exists($_FILES['photo']['tmp_name'])) {
+            # Upload the photo file
+            $photo = Upload::upload($_FILES, "/uploads/avatars/", array('JPG', 'JPEG', 'jpg', 'jpeg', 'gif', 'GIF', 'png', 'PNG'), $this->user->user_id);
+
+			# Return error if invalid file type
+            if($photo == 'Invalid file type.') {
+                Router::redirect("/users/profile?error=invalid"); 
+            }
+            else {
+                # update filename in db
+                $data = Array("photo" => $photo);
+                DB::instance(DB_NAME)->update("users", $data, "WHERE user_id = ".$this->user->user_id);
+            }
         }
 		
 		# Send them back to the homepage

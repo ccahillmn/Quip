@@ -10,10 +10,10 @@
 
 	<!--Required Info -->
 	<?php if(isset($_GET['error'])&& $_GET['error'] == 'blank'): ?>
-	<div class="bs-callout bs-callout-danger alert-dismissable">
-		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-		<strong>Whoops!</strong> Required fields cannot be left blank.
-	</div>
+		<div class="bs-callout bs-callout-danger alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			<strong>Whoops!</strong> Required fields cannot be left blank.
+		</div>
 	<?php endif; ?>
 	
 	<div class="form-group">
@@ -39,10 +39,10 @@
 	
 	<!-- Reset password -->
 	<?php if(isset($_GET['error'])&& $_GET['error'] == 'pw'): ?>
-	<div class="bs-callout bs-callout-danger alert-dismissable">
-		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-		<strong>Whoops!</strong> Passwords do not match.
-	</div>
+		<div class="bs-callout bs-callout-danger alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			<strong>Whoops!</strong> Passwords do not match.
+		</div>
 	<?php endif; ?>
 	
 	<div class="form-group">
@@ -70,12 +70,19 @@
 	</div>
 	
 	<!-- Photo Upload -->
+	<?php if(isset($_GET['error'])&& $_GET['error'] == 'invalid'): ?>
+		<div class="bs-callout bs-callout-danger alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			<strong>Whoops!</strong> File type is invalid. Please choose a jpg, png, or gif.
+		</div>
+	<?php endif ?>
+	
 	<div class="form-group">
 		<label for="photo" class="col-md-2 control-label">
 			Photo<br/>
 		</label>
 		<div class="col-md-5">
-			<img src="/uploads/avatars/<?=$user->photo;?>" alt="<?php $user->first_name . ' ' . $user->last_name ?>" class="avatar">
+			<img src="/uploads/avatars/<?=$user->photo;?>" alt="<?php $user->first_name . ' ' . $user->last_name ?>" class="avatar img-circle">
 			<div class="input-group">
 				<input type="file" class="form-control" name="photo" placeholder="Select a file...">
 				<span class="input-group-btn">
