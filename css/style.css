@@ -33,6 +33,10 @@ footer{
 	margin:0 5px;
 }
 
+.glyphicon-remove-circle{
+	color:#333;
+}
+
 /***** Posts *****/
 .user.btn{
 	width:100px;

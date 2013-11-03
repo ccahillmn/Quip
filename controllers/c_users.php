@@ -127,8 +127,34 @@ class users_controller extends base_controller {
 	-------------------------------------------------------------------------------------------------*/
     public function p_profile() {
 	
-		#Update database with new user data
-		DB::instance(DB_NAME)->update('users',$_POST, 'WHERE user_id ='. $this->user->user_id);
+		#if any required fields are empty, return error; else update user
+		if(empty($_POST['first_name'])||empty($_POST['last_name'])||empty($_POST['email'])){
+			Router::redirect('/users/profile?error=blank');
+		}
+		else{
+			$data = Array(
+				'first_name' => $_POST['first_name'],
+				'last_name' => $_POST['last_name'],
+				'email' => $_POST['email'],
+				'bio' => $_POST['bio'],
+				'website' => $_POST['website'],
+			);
+			DB::instance(DB_NAME)->update('users',$data, 'WHERE user_id ='. $this->user->user_id);
+		}
+			
+	
+		#if password field is set and matches confirmation, update password
+		if(isset($_POST['password'])){
+			if($_POST['password'] == $_POST['password2']){
+				$newpw = sha1(PASSWORD_SALT.$_POST['password']);
+				$data = Array('password' => $newpw);
+				DB::instance(DB_NAME)->update('users', $data, 'WHERE user_id ='. $this->user->user_id);
+			}
+			#If passwords don't match, return error
+			else{
+				Router::redirect('/users/profile?error=pw');
+			}
+        }
 		
 		# Send them back to the homepage
 		Router::redirect('/users/profile?update=success');

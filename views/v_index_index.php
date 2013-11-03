@@ -14,6 +14,7 @@
 				<ul class="list-group">
 					<li class="list-group-item">Delete a post</li>
 					<li class="list-group-item">Edit and display basic profile info</li>
+					<li class="list-group-item">Reset Password</li>
 				</ul>
 			</div>
 		</div>

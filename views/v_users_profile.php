@@ -30,14 +30,15 @@
 		</div>
 	</div>
 	
-	<!-- Reset password
+	<!-- Reset password -->
 	<div class="form-group">
 		<label for="password" class="col-md-2 control-label">Password</label>
 		<div class="col-md-5">
-			<input type="password" class="form-control" name="password" placeholder="Enter new password">
+			<input type="password" class="form-control" name="password" placeholder="Enter new password"><br>
+			<input type="password" class="form-control" name="password2" placeholder="Repeat password">
 		</div>
 	</div>
-	--?>
+
   
 	<!-- Optional Info -->
 	<div class="form-group">
@@ -54,7 +55,7 @@
 		</div>
 	</div>
 	
-	<!-- Photo Upload 
+	<!-- Photo Upload -->
 	<div class="form-group">
 		<label for="photo" class="col-md-2 control-label">
 			Photo<br/>
@@ -73,7 +74,7 @@
 				</label>
 			</div>
 		</div>
-	</div>-->
+	</div>
   
 	<!-- Submit -->
 	<div class="form-group">
