@@ -40,7 +40,8 @@ class posts_controller extends base_controller {
 			    ON posts.user_id = users.user_id
 			WHERE users_users.user_id = '.$this->user->user_id . ' 
 			OR posts.user_id = '.$this->user->user_id . '
-				ORDER BY posts.created DESC';
+			GROUP BY posts.post_id
+			ORDER BY posts.created DESC';
 		
 		# Run query	
 		$posts = DB::instance(DB_NAME)->select_rows($q);

@@ -164,8 +164,8 @@ class users_controller extends base_controller {
             DB::instance(DB_NAME)->update("users", $data, "WHERE user_id = ".$this->user->user_id);
 		}
 		
-		# If new photo choosen, process upload
-		elseif (file_exists($_FILES['photo']['tmp_name'])) {
+		# If new photo chosen, process upload
+		elseif ($_FILES["photo"]["error"] == 0) {
             # Upload the photo file
             $photo = Upload::upload($_FILES, "/uploads/avatars/", array('JPG', 'JPEG', 'jpg', 'jpeg', 'gif', 'GIF', 'png', 'PNG'), $this->user->user_id);
 
@@ -174,9 +174,14 @@ class users_controller extends base_controller {
                 Router::redirect("/users/profile?error=invalid"); 
             }
             else {
-                # update filename in db
+                # update file name in db
                 $data = Array("photo" => $photo);
                 DB::instance(DB_NAME)->update("users", $data, "WHERE user_id = ".$this->user->user_id);
+				
+				# Process image
+                $imgObj = new Image($_SERVER["DOCUMENT_ROOT"] . '/uploads/avatars/' . $photo);
+                $imgObj->resize(50,50, "crop");
+                $imgObj->save_image($_SERVER["DOCUMENT_ROOT"] . '/uploads/avatars/' . $photo); 
             }
         }
 		
