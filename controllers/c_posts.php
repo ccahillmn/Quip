@@ -39,7 +39,7 @@ class posts_controller extends base_controller {
 			INNER JOIN users 
 			    ON posts.user_id = users.user_id
 			WHERE users_users.user_id = '.$this->user->user_id . ' 
-			OR posts.user_id ='.$this->user->user_id . '
+			OR posts.user_id = '.$this->user->user_id . '
 				ORDER BY posts.created DESC';
 		
 		# Run query	

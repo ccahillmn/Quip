@@ -3,34 +3,48 @@
 <?php if(isset($_GET['update'])): ?>
 	<div class="alert alert-success alert-dismissable">
 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-		<strong>Account updated! </strong> Go back to <a href="/">Quips</a> or <a href="/posts/users">Users</a>.
+		<strong>Account updated! </strong> Go back to <a href="/">Home</a> or <a href="/posts/users">Users</a>.
 	</div>
 <?php endif; ?>
 <form class="form-horizontal col-md-offset-3" role="form" method='POST' enctype="multipart/form-data" action='/users/p_profile/'>
 
 	<!--Required Info -->
+	<?php if(isset($_GET['error'])&& $_GET['error'] == 'blank'): ?>
+	<div class="bs-callout bs-callout-danger alert-dismissable">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		<strong>Whoops!</strong> Required fields cannot be left blank.
+	</div>
+	<?php endif; ?>
+	
 	<div class="form-group">
-		<label for="first_name" class="col-md-2 control-label">First Name</label>
+		<label for="first_name" class="col-md-2 control-label">First Name*</label>
 		<div class="col-md-5">
 			<input type="text" class="form-control" name="first_name" value="<?=$user->first_name;?>">
 		</div>
 	</div>
 	
 	<div class="form-group">
-		<label for="last_name" class="col-md-2 control-label">Last Name</label>
+		<label for="last_name" class="col-md-2 control-label">Last Name*</label>
 		<div class="col-md-5">
 			<input type="text" class="form-control" name="last_name" value="<?=$user->last_name;?>">
 		</div>
 	</div>
 	
 	<div class="form-group">
-		<label for="email" class="col-md-2 control-label">Email</label>
+		<label for="email" class="col-md-2 control-label">Email*</label>
 		<div class="col-md-5">
 			<input type="email" class="form-control" name="email" value="<?=$user->email;?>">
 		</div>
 	</div>
 	
 	<!-- Reset password -->
+	<?php if(isset($_GET['error'])&& $_GET['error'] == 'pw'): ?>
+	<div class="bs-callout bs-callout-danger alert-dismissable">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		<strong>Whoops!</strong> Passwords do not match.
+	</div>
+	<?php endif; ?>
+	
 	<div class="form-group">
 		<label for="password" class="col-md-2 control-label">Password</label>
 		<div class="col-md-5">

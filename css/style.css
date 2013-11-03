@@ -51,7 +51,7 @@ footer{
 	margin:5px 15px 5px 0;
 }
 
-/***** Layout *****/
+/***** Objects *****/
 form{
 	margin: 20px 0;
 }
@@ -59,6 +59,24 @@ form{
 .box{
 	border:1px solid #ddd;
 	margin:10px;
+}
+
+.bs-callout {
+	margin: 10px 0 10px 0px;
+	padding: 15px 30px;
+	border-left: 3px solid #eee;
+	max-width:546px;
+}
+
+.bs-callout-danger{
+	color: #b94a48;
+	background-color: #f2dede;
+	border-color: #ebccd1;
+}
+
+.bs-callout-info {
+	background-color: #f4f8fa;
+	border-color: #bce8f1;
 }
 
 hr{
