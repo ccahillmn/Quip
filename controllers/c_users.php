@@ -146,7 +146,7 @@ class users_controller extends base_controller {
 		}
 	
 		# If password field is set and matches confirmation, update password
-		if(isset($_POST['password'])){
+		if(!empty($_POST['password'])){
 			if($_POST['password'] == $_POST['password2']){
 				$newpw = sha1(PASSWORD_SALT.$_POST['password']);
 				$data = Array('password' => $newpw);
