@@ -24,6 +24,25 @@
 </div>
 
 <!-- Sign up form modal -->
-<?=$signup?>
+<div class="modal fade" id="signup">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h2 class="modal-title">Sign Up</h2>
+			</div>
+			<div class="modal-body">
+				<?=$signup?>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- if URL includes #signup, show signup form -->
+<script>
+	if(window.location.hash == '#signup') {
+		$('#signup').modal('show')
+	}
+</script>
 
 

@@ -60,7 +60,8 @@ class posts_controller extends base_controller {
 	Process new posts
 	-------------------------------------------------------------------------------------------------*/
 	public function p_add() {
-		
+	
+		$_POST['content']  =  strip_tags($_POST['content']);
 		$_POST['user_id']  = $this->user->user_id;
 		$_POST['created']  = Time::now();
 		$_POST['modified'] = Time::now();

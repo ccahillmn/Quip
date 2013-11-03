@@ -10,11 +10,62 @@ class users_controller extends base_controller {
 		parent::__construct();
     } 
     
+	/*-------------------------------------------------------------------------------------------------
+    Display standalone sign up page
+    -------------------------------------------------------------------------------------------------*/
+	public function signup($error = NULL) {
+	
+		$this->template->content = View::instance('v_users_signup'); 
+		$this->template->content->signup = View::instance('v_users_signup_form');
+		$this->template->title   = "Sign up";
+		$this->template->content->error = $error;
+		
+    	echo $this->template;   
+		
+	}
     
     /*-------------------------------------------------------------------------------------------------
     Process the sign up form
     -------------------------------------------------------------------------------------------------*/
     public function p_signup() {
+
+		if($_POST){
+		
+			#Check for existing account
+			$exists = DB::instance(DB_NAME)->select_field("SELECT email FROM users WHERE email = '" . $_POST['email'] . "'");
+
+			if (isset($exists)) {
+				Router::redirect('/users/login?acct=exists');         
+			}
+			
+			# Validate form input
+			else{
+		
+				#Check for empty fields
+				foreach($_POST as $req){
+					if(empty($req)){
+						$blank = 'req=blank';
+					}
+				}
+				
+				#check for valid email
+				#todo
+				
+				# Match passwords
+				if($_POST['password'] != $_POST['password2']){
+					$pw = 'pw=mismatch';
+				}
+				
+				Router::redirect('/users/signup/error?' . $blank . '&' . $pw);
+			}
+		}
+		
+		#Clean up input
+		$firstname = $_POST['first_name'];
+		$firstname = strip_tags(htmlentities(stripslashes(nl2br($firstname)),ENT_NOQUOTES,"Utf-8"));
+							
+		$lastname = $_POST['last_name'];
+		$lastname = strip_tags(htmlentities(stripslashes(nl2br($lastname)),ENT_NOQUOTES,"Utf-8"));
 	    	    
 	    # Mark the time
 	    $_POST['created']  = Time::now();
@@ -39,9 +90,10 @@ class users_controller extends base_controller {
     public function login() {
     
     	$this->template->content = View::instance('v_users_login'); 
+		$this->template->title   = "Login to Quip";
 
 		# Provide sign-up option for those who landed on the wrong page
-		$this->template->content->signup = View::instance('v_users_signup');
+		$this->template->content->signup = View::instance('v_users_signup_form');
 		
     	echo $this->template;   
        
@@ -93,6 +145,7 @@ class users_controller extends base_controller {
        $data = Array(
        	'token' => $new_token
        );
+	   
        DB::instance(DB_NAME)->update('users',$data, 'WHERE user_id ='. $this->user->user_id);
        
        # Delete their old token cookie by expiring it
@@ -113,11 +166,9 @@ class users_controller extends base_controller {
 			Router::redirect('/?acct=false');
 		}
 		
-		# Set up the View
 		$this->template->content = View::instance('v_users_profile');
 		$this->template->title   = "Update Profile";
 		
-		# Display the view
 		echo $this->template;
 				
     }
@@ -126,10 +177,7 @@ class users_controller extends base_controller {
 	Update User's Profile
 	-------------------------------------------------------------------------------------------------*/
     public function p_profile() {
-	
-		# Sanitize user input
-		$_POST = DB::instance(DB_NAME)->sanitize($_POST);
-	
+
 		#if any required fields are empty, return error; else update user
 		if(empty($_POST['first_name'])||empty($_POST['last_name'])||empty($_POST['email'])){
 			Router::redirect('/users/profile?error=blank');
@@ -165,9 +213,11 @@ class users_controller extends base_controller {
 		}
 		
 		# If new photo chosen, process upload
-		elseif ($_FILES["photo"]["error"] == 0) {
-            # Upload the photo file
-            $photo = Upload::upload($_FILES, "/uploads/avatars/", array('JPG', 'JPEG', 'jpg', 'jpeg', 'gif', 'GIF', 'png', 'PNG'), $this->user->user_id);
+		elseif ($_FILES['photo']['name'] == 0) {
+            
+			# Conver file extensions to lowercase and upload
+			$_FILES['photo']['name'] = strtolower($_FILES['photo']['name']);
+            $photo = Upload::upload($_FILES, "/uploads/avatars/", array('jpg', 'jpeg', 'gif', 'png',), $this->user->user_id);
 
 			# Return error if invalid file type
             if($photo == 'Invalid file type.') {

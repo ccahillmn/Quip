@@ -1,14 +1,17 @@
 <div class="row">
 <h1 class="center">Your Account</h1>
+
+<!--Update Successful -->
 <?php if(isset($_GET['update'])): ?>
 	<div class="alert alert-success alert-dismissable">
 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 		<strong>Account updated! </strong> Go back to <a href="/">Home</a> or <a href="/posts/users">Users</a>.
 	</div>
 <?php endif; ?>
+
 <form class="form-horizontal col-md-offset-3" role="form" method='POST' enctype="multipart/form-data" action='/users/p_profile/'>
 
-	<!--Required Info -->
+	<!-- Required field blank error -->
 	<?php if(isset($_GET['error'])&& $_GET['error'] == 'blank'): ?>
 		<div class="bs-callout bs-callout-danger alert-dismissable">
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -37,7 +40,7 @@
 		</div>
 	</div>
 	
-	<!-- Reset password -->
+	<!-- Passwords don't match error -->
 	<?php if(isset($_GET['error'])&& $_GET['error'] == 'pw'): ?>
 		<div class="bs-callout bs-callout-danger alert-dismissable">
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -53,8 +56,6 @@
 		</div>
 	</div>
 
-  
-	<!-- Optional Info -->
 	<div class="form-group">
 		<label for="website" class="col-md-2 control-label">Website</label>
 		<div class="col-md-5">
@@ -69,7 +70,7 @@
 		</div>
 	</div>
 	
-	<!-- Photo Upload -->
+	<!-- Photo Upload Error -->
 	<?php if(isset($_GET['error'])&& $_GET['error'] == 'invalid'): ?>
 		<div class="bs-callout bs-callout-danger alert-dismissable">
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -97,7 +98,6 @@
 		</div>
 	</div>
   
-	<!-- Submit -->
 	<div class="form-group">
 		<div class="col-md-offset-2 col-md-5">
 			<button type="submit" class="btn btn-primary btn-lg">Update</button>

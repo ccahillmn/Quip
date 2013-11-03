@@ -6,11 +6,12 @@ body{
 	clear:both;
 }
 
-.center{
-	text-align:center;
-}
+/********** Typography **********/
 
-/***** Typography *****/
+.center{text-align:center;}
+.right{text-align:right;}
+
+/* Defaults */
 h1{
 	margin-bottom:20px;
 }
@@ -19,15 +20,7 @@ p{
 	text-align:justify;
 }
 
-.meta{
-}
-
-footer{
-	text-align:center;
-	position:absolute;
-	bottom:20px;
-	width:100%;
-}
+/* Classes */
 
 .glyphicon{
 	margin:0 5px;
@@ -37,12 +30,16 @@ footer{
 	color:#333;
 }
 
-/***** Posts *****/
+.helptext{
+	margin-bottom:25px;
+	}
+
+/********** Posts **********/
 .user.btn{
 	width:100px;
 }
 
-/***** Users *****/
+/********** Users **********/
 	
 .avatar{
 	height:50px;
@@ -51,7 +48,7 @@ footer{
 	margin:5px 15px 5px 0;
 }
 
-/***** Objects *****/
+/********** Objects **********/
 form{
 	margin: 20px 0;
 }
@@ -79,12 +76,20 @@ form{
 	border-color: #bce8f1;
 }
 
+footer{
+	text-align:center;
+	position:relative;
+	bottom:0;
+	margin:20px 0;
+	width:100%;
+}
+
 hr{
 	clear:both;
 	margin-top:10px;
 }
 
-#login_form, .alert{
+#login_form, #signup_form, .alert{
 	margin:auto;
 	max-width:550px;
 }
