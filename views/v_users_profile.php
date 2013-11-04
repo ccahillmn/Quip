@@ -3,8 +3,7 @@
 
 <!--Update successful -->
 <?php if(isset($_GET['success'])): ?>
-	<div class="alert alert-success alert-dismissable">
-		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+	<div class="alert alert-success">
 		<strong>Account updated! </strong> Go back to <a href="/">Home</a> or <a href="/posts/users">Users</a>
 	</div>
 <?php endif; ?>

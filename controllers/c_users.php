@@ -67,6 +67,12 @@ class users_controller extends base_controller {
 			
 			# Return to form if error exists
 			if($error == true){
+				
+				# Remember entered data
+				foreach ($_POST as $field => $value){
+					setcookie($field, $value, time()+3600, '/');
+				}
+				
 				Router::redirect('/users/signup/error?' . $blank . '&' . $email. '&' . $pw);
 			}
 		}
@@ -99,6 +105,11 @@ class users_controller extends base_controller {
 		
 		# Insert the new user    
 		DB::instance(DB_NAME)->insert_row('users', $data);
+		
+		# Clear cookie w/ form data
+		foreach ($_POST as $field => $value){
+			setcookie($field, $value, strtotime('-1 year'), '/');
+		}
 		
 		# Send them to the login page
 		Router::redirect('/users/login/?acct=new');
