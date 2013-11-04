@@ -233,7 +233,8 @@ class users_controller extends base_controller {
 		# If password field is set and matches confirmation, update password
 		if(!empty($_POST['password']) || !empty($_POST['password2'])){
 			if($_POST['password'] == $_POST['password2']){
-				$password = sha1(PASSWORD_SALT.$_POST['password']);
+				$data = Array('password' => sha1(PASSWORD_SALT.$_POST['password']));
+ -        		DB::instance(DB_NAME)->update('users', $data, 'WHERE user_id ='. $this->user->user_id);
 			}
 			else{
 				$error = true;
@@ -283,7 +284,6 @@ class users_controller extends base_controller {
 				'first_name' => strip_tags(htmlentities(stripslashes(nl2br($_POST['first_name'])),ENT_NOQUOTES,"Utf-8")),
 				'last_name' => strip_tags(htmlentities(stripslashes(nl2br($_POST['last_name'])),ENT_NOQUOTES,"Utf-8")),
 				'email' => $email,
-				'password' => $password,
 				'bio' => strip_tags(htmlentities(stripslashes(nl2br($_POST['bio'])),ENT_NOQUOTES,"Utf-8")),
 				'website' => $website,
 			);
