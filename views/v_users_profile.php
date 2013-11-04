@@ -29,14 +29,14 @@
 	<div class="form-group">
 		<label for="first_name" class="col-md-2 control-label">First Name*</label>
 		<div class="col-md-5">
-			<input type="text" class="form-control" name="first_name" value="<?=$user->first_name;?>">
+			<input type="text" class="form-control" name="first_name" value="<?php if(isset($_COOKIE['first_name'])){ echo $_COOKIE['first_name'];} else { echo $user->first_name;} ?>">
 		</div>
 	</div>
 	
 	<div class="form-group">
 		<label for="last_name" class="col-md-2 control-label">Last Name*</label>
 		<div class="col-md-5">
-			<input type="text" class="form-control" name="last_name" value="<?=$user->last_name;?>">
+			<input type="text" class="form-control" name="last_name" value="<?php if(isset($_COOKIE['last_name'])){ echo $_COOKIE['last_name'];} else { echo $user->last_name;} ?>">
 		</div>
 	</div>
 	
@@ -51,7 +51,7 @@
 	<div class="form-group">
 		<label for="email" class="col-md-2 control-label">Email*</label>
 		<div class="col-md-5">
-			<input type="email" class="form-control" name="email" value="<?=$user->email;?>">
+			<input type="email" class="form-control" name="email" value="<?php if(isset($_COOKIE['email'])){ echo $_COOKIE['email'];} else { echo $user->email;} ?>">
 		</div>
 	</div>
 	
@@ -82,14 +82,14 @@
 	<div class="form-group">
 		<label for="website" class="col-md-2 control-label">Website</label>
 		<div class="col-md-5">
-			<input type="text" class="form-control" name="website" value="<?=$user->website;?>">
+			<input type="text" class="form-control" name="website" value="<?php if(isset($_COOKIE['website'])){ echo $_COOKIE['website'];} else { echo $user->website;} ?>">
 		</div>
 	</div>
 	
 	<div class="form-group">
 		<label for="bio" class="col-md-2 control-label">Bio</label>
 		<div class="col-md-5">
-			<textarea class="form-control" rows="3" name="bio" value="" placeholder="Tell us a bit about yourself..."><?=$user->bio;?></textarea>
+			<textarea class="form-control" rows="3" name="bio" value="" placeholder="Tell us a bit about yourself..."><?php if(isset($_COOKIE['bio'])){ echo $_COOKIE['bio'];} else { echo $user->bio;} ?></textarea>
 		</div>
 	</div>
 	

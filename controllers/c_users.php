@@ -65,12 +65,16 @@ class users_controller extends base_controller {
 				$pw = 'pw=mismatch';
 			}
 			
-			# Return to form if error exists
-			if($error == true){
-				
+			$data = Array(
+			'first_name' => $_POST['first_name'],
+			'last_name' => $_POST['last_name'],
+			'email' => $_POST['email'],
+			);
+			
+			if ($error == true){
 				# Remember entered data
-				foreach ($_POST as $field => $value){
-					setcookie($field, $value, time()+3600, '/');
+				foreach ($data as $field => $value){
+					setcookie($field, $value, strtotime( time()+3600), '/');
 				}
 				
 				Router::redirect('/users/signup/error?' . $blank . '&' . $email. '&' . $pw);
@@ -286,20 +290,32 @@ class users_controller extends base_controller {
 			}
         }
 		
+		$data = Array(
+			'first_name' => strip_tags(htmlentities(stripslashes(nl2br($_POST['first_name'])),ENT_NOQUOTES,"Utf-8")),
+			'last_name' => strip_tags(htmlentities(stripslashes(nl2br($_POST['last_name'])),ENT_NOQUOTES,"Utf-8")),
+			'email' => $email,
+			'bio' => strip_tags(htmlentities(stripslashes(nl2br($_POST['bio'])),ENT_NOQUOTES,"Utf-8")),
+			'website' => $website,
+		);
+		
 		// Update if no errors
+		
 		if ($error == true){
+			# Remember entered data
+			foreach ($data as $field => $value){
+				setcookie($field, $value, strtotime( time()+3600), '/');
+			}
+			
+			# Redirect to error page with relevant messages
 			Router::redirect('/users/profile/error?' . $blank . '&' . $mail . '&' . $pw . '&' . $url . '&' . $file);
 		}
 		else{
-			$data = Array(
-				'first_name' => strip_tags(htmlentities(stripslashes(nl2br($_POST['first_name'])),ENT_NOQUOTES,"Utf-8")),
-				'last_name' => strip_tags(htmlentities(stripslashes(nl2br($_POST['last_name'])),ENT_NOQUOTES,"Utf-8")),
-				'email' => $email,
-				'bio' => strip_tags(htmlentities(stripslashes(nl2br($_POST['bio'])),ENT_NOQUOTES,"Utf-8")),
-				'website' => $website,
-			);
-			
 			DB::instance(DB_NAME)->update('users',$data, 'WHERE user_id ='. $this->user->user_id);
+			
+			# Clear cookie w/ form data
+			foreach ($data as $field => $value){
+				setcookie($field, $value, strtotime('-1 year'), '/');
+			}
 			
 			# Send them back to the homepage
 			Router::redirect('/users/profile?success=true');
