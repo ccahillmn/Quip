@@ -220,14 +220,26 @@ class users_controller extends base_controller {
 
 		#if any required fields are empty, return error
 		if(empty($_POST['first_name'])||empty($_POST['last_name'])||empty($_POST['email'])){
+			$error = true;
 			$blank = 'blank=blank';
 		}
 		
-		# Check for valid email
+		
 		if(isset($_POST['email'])){
-			if(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
+		
+			# Check for duplicate email
+			$exists = DB::instance(DB_NAME)->select_field("SELECT email FROM users WHERE email = '" . $_POST['email'] . "'");
+				
+			if(isset($exists)){
+				$error = true;
+				$mail = 'email=exists';
+			}
+			
+			# Check for valid email
+			elseif(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
 				$email = $_POST['email'];
 			}
+			
 			else{
 				$error = true;
 				$mail = 'email=invalid';

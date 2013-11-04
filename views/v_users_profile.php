@@ -40,11 +40,15 @@
 		</div>
 	</div>
 	
-	<!-- Invalid Email -->
-	<?php if(isset($_GET['email'])&& $_GET['email'] == 'invalid'): ?>
+	<!-- Email Errors -->
+	<?php if(isset($_GET['email'])): ?>
 		<div class="bs-callout bs-callout-warning alert-dismissable">
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-			<strong>Whoops!</strong> Invalid email address. <br>
+			<?php if ($_GET['email'] == 'invalid'): ?>
+				<strong>Whoops!</strong> Invalid email address. <br>
+			<?php elseif($_GET['email'] == 'exists'): ?>
+				<strong>Whoops!</strong> An account with that email already exists. <br>
+			<?php endif ?>
 		</div>
 	<?php endif ?>
 	
