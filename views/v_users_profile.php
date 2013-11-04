@@ -1,18 +1,26 @@
 <div class="row">
 <h1 class="center">Your Account</h1>
 
-<!--Update Successful -->
-<?php if(isset($_GET['update'])): ?>
+<!--Update successful -->
+<?php if(isset($_GET['success'])): ?>
 	<div class="alert alert-success alert-dismissable">
 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-		<strong>Account updated! </strong> Go back to <a href="/">Home</a> or <a href="/posts/users">Users</a>.
+		<strong>Account updated! </strong> Go back to <a href="/">Home</a> or <a href="/posts/users">Users</a>
+	</div>
+<?php endif; ?>
+
+<!-- Account not updated-->
+<?php if(isset($error)): ?>
+	<div class="alert alert-danger alert-dismissable">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		<strong>Account could not be updated</strong> - Correct errors below
 	</div>
 <?php endif; ?>
 
 <form class="form-horizontal col-md-offset-3" role="form" method='POST' enctype="multipart/form-data" action='/users/p_profile/'>
 
 	<!-- Required field blank error -->
-	<?php if(isset($_GET['error'])&& $_GET['error'] == 'blank'): ?>
+	<?php if(isset($_GET['blank']) && $_GET['blank'] == 'blank'): ?>
 		<div class="bs-callout bs-callout-danger alert-dismissable">
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 			<strong>Whoops!</strong> Required fields cannot be left blank.
@@ -33,6 +41,14 @@
 		</div>
 	</div>
 	
+	<!-- Invalid Email -->
+	<?php if(isset($_GET['email'])&& $_GET['email'] == 'invalid'): ?>
+		<div class="bs-callout bs-callout-danger alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			<strong>Whoops!</strong> Invalid email address. <br>
+		</div>
+	<?php endif ?>
+	
 	<div class="form-group">
 		<label for="email" class="col-md-2 control-label">Email*</label>
 		<div class="col-md-5">
@@ -41,7 +57,7 @@
 	</div>
 	
 	<!-- Passwords don't match error -->
-	<?php if(isset($_GET['error'])&& $_GET['error'] == 'pw'): ?>
+	<?php if(isset($_GET['password']) && $_GET['password'] == 'mismatch'): ?>
 		<div class="bs-callout bs-callout-danger alert-dismissable">
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 			<strong>Whoops!</strong> Passwords do not match.
@@ -55,7 +71,15 @@
 			<input type="password" class="form-control" name="password2" placeholder="Repeat password">
 		</div>
 	</div>
-
+	
+	<!-- Invalid URL -->
+	<?php if(isset($_GET['url'])&& $_GET['url'] == 'invalid'): ?>
+		<div class="bs-callout bs-callout-danger alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			<strong>Whoops!</strong> Invalid web address. <br><span class="helptext">Please include the entire URL, e.g. http://quip.com</span>
+		</div>
+	<?php endif ?>
+	
 	<div class="form-group">
 		<label for="website" class="col-md-2 control-label">Website</label>
 		<div class="col-md-5">
@@ -71,7 +95,7 @@
 	</div>
 	
 	<!-- Photo Upload Error -->
-	<?php if(isset($_GET['error'])&& $_GET['error'] == 'invalid'): ?>
+	<?php if(isset($_GET['file'])&& $_GET['file'] == 'invalid'): ?>
 		<div class="bs-callout bs-callout-danger alert-dismissable">
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 			<strong>Whoops!</strong> File type is invalid. Please choose a jpg, png, or gif.

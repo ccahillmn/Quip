@@ -28,37 +28,36 @@ class users_controller extends base_controller {
     Process the sign up form
     -------------------------------------------------------------------------------------------------*/
     public function p_signup() {
-
-		if($_POST){
 		
-			#Check for existing account
-			$exists = DB::instance(DB_NAME)->select_field("SELECT email FROM users WHERE email = '" . $_POST['email'] . "'");
+		// Check for existing account
+		$exists = DB::instance(DB_NAME)->select_field("SELECT email FROM users WHERE email = '" . $_POST['email'] . "'");
 
-			if (isset($exists)) {
-				Router::redirect('/users/login?acct=exists');         
+		if (isset($exists)) {
+			Router::redirect('/users/login?acct=exists');         
+		}
+		
+		// Validate form input
+		else{
+	
+			# Check for empty fields
+			foreach($_POST as $req){
+				if(empty($req)){
+					$blank = 'req=blank';
+				}
 			}
 			
-			# Validate form input
-			else{
-		
-				#Check for empty fields
-				foreach($_POST as $req){
-					if(empty($req)){
-						$blank = 'req=blank';
-					}
-				}
-				
-				#check for valid email
-				filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
-				
-				# Match passwords
-				if($_POST['password'] != $_POST['password2']){
-					$pw = 'pw=mismatch';
-				}
-				
-				Router::redirect('/users/signup/error?' . $blank . '&' . $email. '&' . $pw);
+			# Check for valid email
+			filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
+			
+			# Match passwords
+			if($_POST['password'] != $_POST['password2']){
+				$pw = 'pw=mismatch';
 			}
+			
+			Router::redirect('/users/signup/error?' . $blank . '&' . $email. '&' . $pw);
 		}
+		
+		// Prep data
 		
 		#Clean up input
 		$_POST['first name'] = strip_tags(htmlentities(stripslashes(nl2br($_POST['first_name'])),ENT_NOQUOTES,"Utf-8"));
@@ -73,6 +72,9 @@ class users_controller extends base_controller {
 	    # Create a hashed token
 	    $_POST['token']    = sha1(TOKEN_SALT.$_POST['email'].Utils::generate_random_string());
 	    
+		
+		//Create account
+		
 	    # Insert the new user    
 	    DB::instance(DB_NAME)->insert_row('users', $_POST);
 	    
@@ -157,7 +159,7 @@ class users_controller extends base_controller {
 	/*-------------------------------------------------------------------------------------------------
 	Display User's Profile
 	-------------------------------------------------------------------------------------------------*/
-    public function profile() {
+    public function profile($error = NULL) {
 		
 		# Route unauthenticated users to home with notifcation
 		if(!$this->user) {
@@ -166,6 +168,7 @@ class users_controller extends base_controller {
 		
 		$this->template->content = View::instance('v_users_profile');
 		$this->template->title   = "Update Profile";
+		$this->template->content->error 	 = $error;
 		
 		echo $this->template;
 				
@@ -175,67 +178,99 @@ class users_controller extends base_controller {
 	Update User's Profile
 	-------------------------------------------------------------------------------------------------*/
     public function p_profile() {
+	
+		// Validate input
 
-		#if any required fields are empty, return error; else update user
+		#if any required fields are empty, return error
 		if(empty($_POST['first_name'])||empty($_POST['last_name'])||empty($_POST['email'])){
-			Router::redirect('/users/profile?error=blank');
+			$blank = 'blank=blank';
 		}
-		else{
-			$data = Array(
-				'first_name' => $_POST['first_name'],
-				'last_name' => $_POST['last_name'],
-				'email' => $_POST['email'],
-				'bio' => $_POST['bio'],
-				'website' => $_POST['website'],
-			);
-			DB::instance(DB_NAME)->update('users',$data, 'WHERE user_id ='. $this->user->user_id);
+		
+		# Check for valid email
+		if(isset($_POST['email'])){
+			if(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
+				$email = $_POST['email'];
+			}
+			else{
+				$error = true;
+				$email = 'email=invalid';
+			}
+		}
+		
+		# Check for valid website url
+		if(isset($_POST['website'])){
+			if(filter_var($_POST['website'], FILTER_VALIDATE_URL)){
+				$website = $_POST['website'];
+			}
+			else{
+				$error = true;
+				$url = 'url=invalid';
+			}
 		}
 	
 		# If password field is set and matches confirmation, update password
-		if(!empty($_POST['password'])){
+		if(!empty($_POST['password']) || !empty($_POST['password2'])){
 			if($_POST['password'] == $_POST['password2']){
-				$newpw = sha1(PASSWORD_SALT.$_POST['password']);
-				$data = Array('password' => $newpw);
-				DB::instance(DB_NAME)->update('users', $data, 'WHERE user_id ='. $this->user->user_id);
+				$password = sha1(PASSWORD_SALT.$_POST['password']);
 			}
-			#If passwords don't match, return error
 			else{
-				Router::redirect('/users/profile?error=pw');
+				$error = true;
+				$pw = 'password=mismatch';
 			}
         }
-
-		# If Remove Photo is checked, replace default avatar
+		
+		// Process photo
+		
+		# If Remove Photo is checked, restore default avatar
 		if (isset($_POST['rm_photo'])) {
-			$data = Array("photo" => 'default.png');
+			$data = Array('photo' => 'default.png');
             DB::instance(DB_NAME)->update("users", $data, "WHERE user_id = ".$this->user->user_id);
 		}
-		
-		# If new photo chosen, process upload
-		elseif ($_FILES['photo']['name'] == 0) {
+		else{
+			# If new photo chosen, process upload
+			if (!empty($_FILES['photo']['name'])) {
             
-			# Conver file extensions to lowercase and upload
-			$_FILES['photo']['name'] = strtolower($_FILES['photo']['name']);
-            $photo = Upload::upload($_FILES, "/uploads/avatars/", array('jpg', 'jpeg', 'gif', 'png',), $this->user->user_id);
+				# Convert file extensions to lowercase and upload
+				$_FILES['photo']['name'] = strtolower($_FILES['photo']['name']);
+				$photo = Upload::upload($_FILES, "/uploads/avatars/", array('jpg', 'jpeg', 'gif', 'png',), $this->user->user_id);
 
-			# Return error if invalid file type
-            if($photo == 'Invalid file type.') {
-                Router::redirect("/users/profile?error=invalid"); 
-            }
-            else {
-                # update file name in db
-                $data = Array("photo" => $photo);
-                DB::instance(DB_NAME)->update("users", $data, "WHERE user_id = ".$this->user->user_id);
+				# Return error if invalid file type
+				if($photo == 'Invalid file type.') {
+					$error = true;
+					$file = 'file=invalid';	
+				}
 				
 				# Process image
-                $imgObj = new Image($_SERVER["DOCUMENT_ROOT"] . '/uploads/avatars/' . $photo);
-                $imgObj->resize(50,50, "crop");
-                $imgObj->save_image($_SERVER["DOCUMENT_ROOT"] . '/uploads/avatars/' . $photo); 
-            }
+				else {
+					$data = Array("photo" => $photo);
+					DB::instance(DB_NAME)->update("users", $data, "WHERE user_id = ".$this->user->user_id);
+					
+					$imgObj = new Image($_SERVER["DOCUMENT_ROOT"] . '/uploads/avatars/' . $photo);
+					$imgObj->resize(50,50, "crop");
+					$imgObj->save_image($_SERVER["DOCUMENT_ROOT"] . '/uploads/avatars/' . $photo); 
+				}
+			}
         }
 		
-		# Send them back to the homepage
-		Router::redirect('/users/profile?update=success');
-		
+		// Update if no errors
+		if ($error == true){
+			Router::redirect('/users/profile/error?' . $blank . '&' . $email . '&' . $pw . '&' . $url . '&' . $file);
+		}
+		else{
+			$data = Array(
+				'first_name' => strip_tags(htmlentities(stripslashes(nl2br($_POST['first_name'])),ENT_NOQUOTES,"Utf-8")),
+				'last_name' => strip_tags(htmlentities(stripslashes(nl2br($_POST['last_name'])),ENT_NOQUOTES,"Utf-8")),
+				'email' => $email,
+				'password' => $password,
+				'bio' => strip_tags(htmlentities(stripslashes(nl2br($_POST['bio'])),ENT_NOQUOTES,"Utf-8")),
+				'website' => $website,
+			);
+			
+			DB::instance(DB_NAME)->update('users',$data, 'WHERE user_id ='. $this->user->user_id);
+			
+			# Send them back to the homepage
+			Router::redirect('/users/profile?success=true');
+		}
     }
 	
 } # end of the class
