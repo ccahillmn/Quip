@@ -17,7 +17,7 @@ class users_controller extends base_controller {
 	
 		$this->template->content = View::instance('v_users_signup'); 
 		$this->template->content->signup = View::instance('v_users_signup_form');
-		$this->template->title   = "Sign up";
+		$this->template->title = "Sign up";
 		$this->template->content->error = $error;
 		
     	echo $this->template;   
@@ -49,23 +49,20 @@ class users_controller extends base_controller {
 				}
 				
 				#check for valid email
-				#todo
+				filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
 				
 				# Match passwords
 				if($_POST['password'] != $_POST['password2']){
 					$pw = 'pw=mismatch';
 				}
 				
-				Router::redirect('/users/signup/error?' . $blank . '&' . $pw);
+				Router::redirect('/users/signup/error?' . $blank . '&' . $email. '&' . $pw);
 			}
 		}
 		
 		#Clean up input
-		$firstname = $_POST['first_name'];
-		$firstname = strip_tags(htmlentities(stripslashes(nl2br($firstname)),ENT_NOQUOTES,"Utf-8"));
-							
-		$lastname = $_POST['last_name'];
-		$lastname = strip_tags(htmlentities(stripslashes(nl2br($lastname)),ENT_NOQUOTES,"Utf-8"));
+		$_POST['first name'] = strip_tags(htmlentities(stripslashes(nl2br($_POST['first_name'])),ENT_NOQUOTES,"Utf-8"));
+		$_POST['last name'] = strip_tags(htmlentities(stripslashes(nl2br($_POST['last_name'])),ENT_NOQUOTES,"Utf-8"));
 	    	    
 	    # Mark the time
 	    $_POST['created']  = Time::now();
@@ -87,10 +84,11 @@ class users_controller extends base_controller {
 	/*-------------------------------------------------------------------------------------------------
 	Display a form so users can login
 	-------------------------------------------------------------------------------------------------*/
-    public function login() {
+    public function login($error = NULL) {
     
     	$this->template->content = View::instance('v_users_login'); 
-		$this->template->title   = "Login to Quip";
+		$this->template->title = "Login to Quip";
+		$this->template->content->error = $error;
 
 		# Provide sign-up option for those who landed on the wrong page
 		$this->template->content->signup = View::instance('v_users_signup_form');
@@ -128,7 +126,7 @@ class users_controller extends base_controller {
 		}
 		# Fail
 		else {
-			echo "Login failed! <a href='/users/login'>Try again?</a>";
+			Router::redirect('/users/login/error');
 		}
 	}
 	

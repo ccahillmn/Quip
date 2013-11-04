@@ -9,11 +9,19 @@
 		</div>
 	<?php endif; ?>
 
-	<!-- If email exists during sign -->
+	<!-- If email exists during sign up -->
 	<?php if(isset($_GET['acct']) && $_GET['acct'] == 'exists'): ?>
 		<div class="alert alert-warning alert-dismissable">
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-			<strong>Existing account </strong> An account with that email already exists - please login.
+			<strong>Existing account</strong> - An account with that email already exists. Please login.
+		</div>
+	<?php endif; ?>
+	
+	<!-- Invalid Login -->
+	<?php if(isset($error)): ?>
+		<div class="alert alert-danger alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			<strong>Invalid Login</strong> - Incorrect email or password. Try again.
 		</div>
 	<?php endif; ?>
 	

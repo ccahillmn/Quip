@@ -61,7 +61,7 @@ class posts_controller extends base_controller {
 	-------------------------------------------------------------------------------------------------*/
 	public function p_add() {
 	
-		$_POST['content']  =  strip_tags($_POST['content']);
+		$_POST['content']  = strip_tags(htmlentities(stripslashes(nl2br($_POST['content'])),ENT_NOQUOTES,"Utf-8"));
 		$_POST['user_id']  = $this->user->user_id;
 		$_POST['created']  = Time::now();
 		$_POST['modified'] = Time::now();
@@ -112,7 +112,7 @@ class posts_controller extends base_controller {
 		$connections = DB::instance(DB_NAME)->select_array($q,'user_id_followed');
 		
 		# Pass data to the view
-		$this->template->content->users       = $users;
+		$this->template->content->users = $users;
 		$this->template->content->connections = $connections;
 		$this->template->content->addpost = View::instance('v_posts_add');
 		$this->template->content->user_sum = View::instance('v_users_user');
