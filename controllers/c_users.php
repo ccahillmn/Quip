@@ -228,7 +228,7 @@ class users_controller extends base_controller {
 		if(isset($_POST['email'])){
 		
 			# Check for duplicate email
-			$exists = DB::instance(DB_NAME)->select_field("SELECT email FROM users WHERE email = '" . $_POST['email'] . "'");
+			$exists = DB::instance(DB_NAME)->select_row("SELECT email FROM users WHERE email = '" . $_POST['email'] . "' AND user_id !=" . $this->user->user_id);
 				
 			if(isset($exists)){
 				$error = true;

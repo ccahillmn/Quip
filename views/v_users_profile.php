@@ -106,17 +106,12 @@
 	<?php endif ?>
 	
 	<div class="form-group">
-		<label for="photo" class="col-md-2 control-label">
-			Photo<br/>
-		</label>
-		<div class="col-md-5">
+		<label for="photo" class="col-md-2 control-label">Photo<br/></label>
+		<div class="col-md-1">
 			<img src="/uploads/avatars/<?=$user->photo;?>" alt="<?php $user->first_name . ' ' . $user->last_name ?>" class="avatar img-circle">
-			<div class="input-group">
-				<input type="file" class="form-control" name="photo" placeholder="Select a file...">
-				<span class="input-group-btn">
-					<button class="btn btn-default" type="button">Browse</button>
-				</span>
-			</div>
+		</div>
+		<div class="col-md-4">
+			<input type="file" class="form-control" name="photo" placeholder="Select a file...">
 			<div class="checkbox pull-right">
 				<label>
 					<input name="rm_photo" type="checkbox"> Remove photo
