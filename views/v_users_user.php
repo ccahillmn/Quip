@@ -1,6 +1,6 @@
 <h2>Your Profile</h2>
 <img src="/uploads/avatars/<?=$user->photo;?>" class="avatar img-circle"/>
-<?=$user->first_name;?> <?=$user->last_name;?><br>
+<a href="/posts/user/<?=$user->user_id?>"><?=$user->first_name;?> <?=$user->last_name;?></a><br>
 
 <!-- if website set -->
 <?php if($user->website): ?>

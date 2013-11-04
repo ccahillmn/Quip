@@ -18,11 +18,13 @@ class posts_controller extends base_controller {
 	/*-------------------------------------------------------------------------------------------------
 	View all posts
 	-------------------------------------------------------------------------------------------------*/
-	public function index($error = NULL) {
+	public function index($add = true,$error = NULL) {
 		
 		# Set up view
 		$this->template->content = View::instance('v_posts_index');
 		
+		#Display add post box
+
 		# Set up query
 		$q = 'SELECT 
 			    posts.content,
@@ -48,9 +50,56 @@ class posts_controller extends base_controller {
 		
 		# Pass data to the view
 		$this->template->content->posts = $posts;
-		$this->template->content->addpost = View::instance('v_posts_add');
 		$this->template->content->user_sum = View::instance('v_users_user');
 		$this->template->content->error = $error;
+		$this->template->content->add = $add;
+		$this->template->content->page_id = "";
+		
+		# Render view
+		echo $this->template;
+		
+	}
+	
+	/*-------------------------------------------------------------------------------------------------
+	View all posts by a specific user
+	-------------------------------------------------------------------------------------------------*/
+	public function user($user_id, $error = NULL) {
+	
+		# If no user set, redirect to index
+		if(!isset($user_id)){
+			Router::redirect('/');
+		}
+		
+		# Set up view
+		$this->template->content = View::instance('v_posts_index');
+
+		# Set up query
+		$q = 'SELECT 
+			    posts.content,
+			    posts.created,
+			    posts.user_id AS post_user_id,
+				posts.post_id,
+			    users.first_name,
+			    users.last_name,
+				users.photo
+			FROM posts
+			INNER JOIN users 
+			    ON posts.user_id = users.user_id
+			WHERE posts.user_id = '. $user_id . '
+			ORDER BY posts.created DESC';
+		
+		# Run query	
+		$posts = DB::instance(DB_NAME)->select_rows($q);
+		
+		# Diplay add post box if on own profile
+		$add = ($user_id == $this->user->user_id ? true : false);
+		
+		# Pass data to the view
+		$this->template->content->posts = $posts;
+		$this->template->content->user_sum = View::instance('v_users_user');
+		$this->template->content->error = $error;
+		$this->template->content->add = $add;
+		$this->template->content->page_id = $this->user->user_id;
 		
 		# Render view
 		echo $this->template;
@@ -72,14 +121,18 @@ class posts_controller extends base_controller {
 
 		# Add post
 		else{
-			$_POST['content']  = strip_tags(htmlentities($content));
-			$_POST['user_id']  = $this->user->user_id;
-			$_POST['created']  = Time::now();
-			$_POST['modified'] = Time::now();
+			$data = array(
+				'content'  => strip_tags(htmlentities($_POST['content'])),
+				'user_id'  => $this->user->user_id,
+				'created'  => Time::now(),
+				'modified' => Time::now()
+			);
 			
-			DB::instance(DB_NAME)->insert('posts',$_POST);
+			DB::instance(DB_NAME)->insert_row('posts', $data);
 			
-			Router::redirect('/posts');
+			# Redirect back to previous page
+			
+			Router::redirect('/posts/user/'.$_POST['page_id']);
 		}
 		
 	}
@@ -87,7 +140,7 @@ class posts_controller extends base_controller {
 	/*-------------------------------------------------------------------------------------------------
 	Delete a post
 	-------------------------------------------------------------------------------------------------*/
-	public function delete($post_id) {
+	public function delete($post_id, $user_id) {
 	
 		# Set up the where condition
 	    $where_condition = 'WHERE post_id = '.$post_id;
@@ -95,7 +148,12 @@ class posts_controller extends base_controller {
 	    # Run the delete
 	    DB::instance(DB_NAME)->delete('posts', $where_condition);
 		
-		Router::redirect('/posts');
+		# Redirect back to previous page
+		$page_id = (isset($user_id) ? 'user/'.$user_id : "");
+		
+		Router::redirect('/posts/'.$page_id);
+	
+
 		
 	}
 	

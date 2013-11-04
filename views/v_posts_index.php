@@ -6,9 +6,18 @@
 			<?=$user_sum?>
 		</div>
 		<!-- Add a post -->
+		<?php if ($add == true): ?>
 		<div class="box">
-			<?=$addpost?>
+			<form method='post' action='/posts/p_add' role="form">
+				<div class="form-group">
+					<label for="content">Post a quip:</label><br>
+					<input type="text" name="content">
+					<input type="hidden" name="page_id" value="<?=$page_id?>">
+				</div>
+				<button class="btn btn-default" type='Submit'>Quip</button>
+			</form>
 		</div>
+		<?php endif ?>
 	</div>
 	
 	<!-- Stream of posts -->
@@ -16,17 +25,17 @@
 		<?php foreach($posts as $post): ?>
 			<div class="post">
 				<?php if($post['post_user_id'] == $user->user_id): ?>
-					<a href="/posts/delete/<?php echo $post['post_id']?>"><span alt="Delete Post" title="Delete this post" class="glyphicon glyphicon-remove-circle pull-right"></span></a>
+					<a href="/posts/delete/<?php echo $post['post_id']; if($add == true){ echo '/'. $user->user_id;}?>"><span alt="Delete Post" title="Delete this post" class="glyphicon glyphicon-remove-circle pull-right"></span></a>
 				<?php endif; ?>
 				<p><?=$post['content']?><img src="/uploads/avatars/<?=$post['photo']?>" class="avatar img-circle"/></p>
 				<p class="meta">
-					Posted by <em>
+					Posted by <a href="/posts/user/<?=$post['post_user_id']?>"><em>
 					<?php if($post['post_user_id'] == $user->user_id): ?>
 						You
 					<?php else: ?>
 						<?=$post['first_name']?> 
 					<?php endif; ?>
-					</em>on <?=Time::display($post['created'])?>
+					</a></em>on <?=Time::display($post['created'])?>
 				</p>
 			</div>
 		<?php endforeach; ?>
