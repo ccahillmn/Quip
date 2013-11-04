@@ -38,48 +38,70 @@ class users_controller extends base_controller {
 		
 		// Validate form input
 		else{
-	
+		
+			#initialize error
+			$error = false;
+			
 			# Check for empty fields
 			foreach($_POST as $req){
 				if(empty($req)){
-					$blank = 'req=blank';
+					$error = true;
+					$blank = 'blank=blank';
 				}
 			}
 			
 			# Check for valid email
-			filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
+			if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
+				$error = true;
+				$email = 'email=invalid';
+			}
+			else{
+				$email = $_POST['email'];
+			}
 			
 			# Match passwords
 			if($_POST['password'] != $_POST['password2']){
+				$error = true;
 				$pw = 'pw=mismatch';
 			}
 			
-			Router::redirect('/users/signup/error?' . $blank . '&' . $email. '&' . $pw);
+			# Return to form if error exists
+			if($error == true){
+				Router::redirect('/users/signup/error?' . $blank . '&' . $email. '&' . $pw);
+			}
 		}
-		
+
 		// Prep data
 		
 		#Clean up input
-		$_POST['first name'] = strip_tags(htmlentities(stripslashes(nl2br($_POST['first_name'])),ENT_NOQUOTES,"Utf-8"));
-		$_POST['last name'] = strip_tags(htmlentities(stripslashes(nl2br($_POST['last_name'])),ENT_NOQUOTES,"Utf-8"));
-	    	    
-	    # Mark the time
-	    $_POST['created']  = Time::now();
-	    
-	    # Hash password
-	    $_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
-	    
-	    # Create a hashed token
-	    $_POST['token']    = sha1(TOKEN_SALT.$_POST['email'].Utils::generate_random_string());
-	    
+		$first_name = strip_tags(htmlentities(stripslashes(nl2br($_POST['first_name'])),ENT_NOQUOTES,"Utf-8"));
+		$last_name = strip_tags(htmlentities(stripslashes(nl2br($_POST['last_name'])),ENT_NOQUOTES,"Utf-8"));
+				
+		# Mark the time
+		$created  = Time::now();
+		
+		# Hash password
+		$password = sha1(PASSWORD_SALT.$_POST['password']);
+		
+		# Create a hashed token
+		$token   = sha1(TOKEN_SALT.$_POST['email'].Utils::generate_random_string());
+		
+		$data = Array(
+				'first_name' => $first_name,
+				'last_name' => $last_name,
+				'email' => $email,
+				'password' => $password,
+				'created' => $created,
+				'token' => $token
+			);
 		
 		//Create account
 		
-	    # Insert the new user    
-	    DB::instance(DB_NAME)->insert_row('users', $_POST);
-	    
-	    # Send them to the login page
-	    Router::redirect('/users/login/?acct=new');
+		# Insert the new user    
+		DB::instance(DB_NAME)->insert_row('users', $data);
+		
+		# Send them to the login page
+		Router::redirect('/users/login/?acct=new');
 	    
     }
 	
@@ -193,12 +215,12 @@ class users_controller extends base_controller {
 			}
 			else{
 				$error = true;
-				$email = 'email=invalid';
+				$mail = 'email=invalid';
 			}
 		}
 		
 		# Check for valid website url
-		if(isset($_POST['website'])){
+		if(!empty($_POST['website'])){
 			if(filter_var($_POST['website'], FILTER_VALIDATE_URL)){
 				$website = $_POST['website'];
 			}
@@ -254,7 +276,7 @@ class users_controller extends base_controller {
 		
 		// Update if no errors
 		if ($error == true){
-			Router::redirect('/users/profile/error?' . $blank . '&' . $email . '&' . $pw . '&' . $url . '&' . $file);
+			Router::redirect('/users/profile/error?' . $blank . '&' . $mail . '&' . $pw . '&' . $url . '&' . $file);
 		}
 		else{
 			$data = Array(
