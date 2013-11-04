@@ -22,7 +22,7 @@
 					
 					<!-- User Summary -->
 					<img src="/uploads/avatars/<?=$user['photo']?>" class="avatar img-circle"/>
-					<?=$user['first_name']?> <?=$user['last_name']?><br>
+					<a href="/posts/user/<?=$user['user_id']?>"><?=$user['first_name']?> <?=$user['last_name']?></a><br>
 
 					<!-- Display website if set -->
 					<?php if($user['website']): ?>

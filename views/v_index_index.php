@@ -13,9 +13,10 @@
 				</div>
 				<ul class="list-group">
 					<li class="list-group-item">Delete a post</li>
-					<li class="list-group-item">Edit and display basic profile info</li>
+					<li class="list-group-item">Edit and display profile info</li>
 					<li class="list-group-item">Reset Password</li>
 					<li class="list-group-item">Upload or Remove Photo</li>
+					<li class="list-group-item">View posts from specific user</li>
 				</ul>
 			</div>
 		</div>

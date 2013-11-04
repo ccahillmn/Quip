@@ -99,7 +99,7 @@ class posts_controller extends base_controller {
 		$this->template->content->user_sum = View::instance('v_users_user');
 		$this->template->content->error = $error;
 		$this->template->content->add = $add;
-		$this->template->content->page_id = $this->user->user_id;
+		$this->template->content->page_id = $user_id;
 		
 		# Render view
 		echo $this->template;
@@ -184,7 +184,6 @@ class posts_controller extends base_controller {
 		# Pass data to the view
 		$this->template->content->users = $users;
 		$this->template->content->connections = $connections;
-		$this->template->content->addpost = View::instance('v_posts_add');
 		$this->template->content->user_sum = View::instance('v_users_user');
 		
 		# Render view
