@@ -21,7 +21,7 @@
 
 	<!-- Required field blank error -->
 	<?php if(isset($_GET['blank']) && $_GET['blank'] == 'blank'): ?>
-		<div class="bs-callout bs-callout-danger alert-dismissable">
+		<div class="bs-callout bs-callout-warning alert-dismissable">
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 			<strong>Whoops!</strong> Required fields cannot be left blank.
 		</div>
@@ -43,7 +43,7 @@
 	
 	<!-- Invalid Email -->
 	<?php if(isset($_GET['email'])&& $_GET['email'] == 'invalid'): ?>
-		<div class="bs-callout bs-callout-danger alert-dismissable">
+		<div class="bs-callout bs-callout-warning alert-dismissable">
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 			<strong>Whoops!</strong> Invalid email address. <br>
 		</div>
@@ -58,7 +58,7 @@
 	
 	<!-- Passwords don't match error -->
 	<?php if(isset($_GET['password']) && $_GET['password'] == 'mismatch'): ?>
-		<div class="bs-callout bs-callout-danger alert-dismissable">
+		<div class="bs-callout bs-callout-warning alert-dismissable">
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 			<strong>Whoops!</strong> Passwords do not match.
 		</div>
@@ -74,7 +74,7 @@
 	
 	<!-- Invalid URL -->
 	<?php if(isset($_GET['url'])&& $_GET['url'] == 'invalid'): ?>
-		<div class="bs-callout bs-callout-danger alert-dismissable">
+		<div class="bs-callout bs-callout-warning alert-dismissable">
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 			<strong>Whoops!</strong> Invalid web address. <br><span class="helptext">Please include the entire URL, e.g. http://quip.com</span>
 		</div>
@@ -96,7 +96,7 @@
 	
 	<!-- Photo Upload Error -->
 	<?php if(isset($_GET['file'])&& $_GET['file'] == 'invalid'): ?>
-		<div class="bs-callout bs-callout-danger alert-dismissable">
+		<div class="bs-callout bs-callout-warning alert-dismissable">
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 			<strong>Whoops!</strong> File type is invalid. Please choose a jpg, png, or gif.
 		</div>

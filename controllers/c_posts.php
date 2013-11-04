@@ -18,7 +18,7 @@ class posts_controller extends base_controller {
 	/*-------------------------------------------------------------------------------------------------
 	View all posts
 	-------------------------------------------------------------------------------------------------*/
-	public function index() {
+	public function index($error = NULL) {
 		
 		# Set up view
 		$this->template->content = View::instance('v_posts_index');
@@ -50,6 +50,7 @@ class posts_controller extends base_controller {
 		$this->template->content->posts = $posts;
 		$this->template->content->addpost = View::instance('v_posts_add');
 		$this->template->content->user_sum = View::instance('v_users_user');
+		$this->template->content->error = $error;
 		
 		# Render view
 		echo $this->template;
@@ -61,14 +62,25 @@ class posts_controller extends base_controller {
 	-------------------------------------------------------------------------------------------------*/
 	public function p_add() {
 	
-		$_POST['content']  = strip_tags(htmlentities(stripslashes(nl2br($_POST['content'])),ENT_NOQUOTES,"Utf-8"));
-		$_POST['user_id']  = $this->user->user_id;
-		$_POST['created']  = Time::now();
-		$_POST['modified'] = Time::now();
+		# Remove trailing whitespace
+		$content = trim($_POST['content']);
 		
-		DB::instance(DB_NAME)->insert('posts',$_POST);
-		
-		Router::redirect('/posts');
+		# Return error if post is blank
+		if (empty($content)){
+			Router::redirect('/posts');
+		}
+
+		# Add post
+		else{
+			$_POST['content']  = strip_tags(htmlentities($content));
+			$_POST['user_id']  = $this->user->user_id;
+			$_POST['created']  = Time::now();
+			$_POST['modified'] = Time::now();
+			
+			DB::instance(DB_NAME)->insert('posts',$_POST);
+			
+			Router::redirect('/posts');
+		}
 		
 	}
 	
