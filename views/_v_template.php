@@ -24,7 +24,7 @@
 		<a class="navbar-brand brand" href="#">Quip</a>
 		<?php if($user): ?>
 		<ul class="nav navbar-nav navbar-right">
-			<li><a href='/users/profile'><span class="glyphicon glyphicon-user"></span>My Account</a></li>
+			<li><a href='/users/profile'><span class="glyphicon glyphicon-user"></span>Update Account</a></li>
 			<li><a href='/users/logout'><span class="glyphicon glyphicon-off"></span>Logout</a></li>
 		</ul>	
 		<?php else: ?>

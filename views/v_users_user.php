@@ -13,4 +13,4 @@
 <?php endif; ?> 
 
 <hr/>
-<a href="/users/profile/">Update your profile <span class="glyphicon glyphicon-pencil"></span></a>
+<a href="/users/profile/">Update your account <span class="glyphicon glyphicon-pencil"></span></a>
