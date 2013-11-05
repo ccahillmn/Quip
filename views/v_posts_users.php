@@ -1,7 +1,7 @@
-	<h1 class="col-md-offset-1">Who's <span class="brand">Quipping?</span></h1>
+	<h1 class="col-md-offset-2">Quippers</h1>
 	<div class="row">
 	
-		<div id="sidebar" class="col-xs-6 col-md-4 col-md-offset-1">
+		<div id="sidebar" class="col-xs-6 col-md-4 col-md-offset-2">
 			<!-- User Profile -->
 			<div class="box">
 				<?=$user_sum?>
@@ -9,7 +9,7 @@
 		</div>
 		
 		<!-- Stream of posts -->
-		<div id="stream" class="col-xs-6 col-md-4">
+		<div id="stream" class="col-xs-6 col-md-5">
 			<?php foreach($users as $user): ?>
 				<div class="user clear">
 				
@@ -22,7 +22,7 @@
 					
 					<!-- User Summary -->
 					<img src="/uploads/avatars/<?=$user['photo']?>" class="avatar img-circle"/>
-					<a href="/posts/user/<?=$user['user_id']?>"><?=$user['first_name']?> <?=$user['last_name']?></a><br>
+					<strong><a href="/posts/user/<?=$user['user_id']?>"><?=$user['first_name']?> <?=$user['last_name']?></a></strong><br>
 
 					<!-- Display website if set -->
 					<?php if($user['website']): ?>

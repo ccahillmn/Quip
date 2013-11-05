@@ -1,6 +1,6 @@
-<h1 class="col-md-offset-1">Quips</h1>
+<h1 class="col-md-offset-2">Quips</h1>
 <div class="row">
-	<div id="sidebar" class="col-xs-6 col-md-4 col-md-offset-1">
+	<div id="sidebar" class="col-xs-6 col-md-4 col-md-offset-2">
 		<!-- User Profile -->
 		<div class="box">
 			<?=$user_sum?>
@@ -8,10 +8,11 @@
 		<!-- Add a post -->
 		<?php if ($add == true): ?>
 		<div class="box">
+			<h2>Post a quip:</h2>
 			<form method='post' action='/posts/p_add' role="form">
 				<div class="form-group">
-					<label for="content">Post a quip:</label><br>
-					<input type="text" name="content">
+					<label for="content" class="sr-only">Post a quip:</label>
+					<input type="text" name="content" class="form-control">
 					<input type="hidden" name="page_id" value="<?=$page_id?>">
 				</div>
 				<button class="btn btn-default" type='Submit'>Quip</button>
@@ -21,7 +22,7 @@
 	</div>
 	
 	<!-- Stream of posts -->
-	<div id="stream" class="col-xs-6 col-md-4">
+	<div id="stream" class="col-xs-6 col-md-5">
 		<?php foreach($posts as $post): ?>
 			<div class="post">
 				<?php if($post['post_user_id'] == $user->user_id): ?>

@@ -21,14 +21,12 @@
 <body>	
 	<!-- Sticky top menu -->
 	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-		<a class="navbar-brand" href="#">Quip</a>
-		<ul class="nav navbar-nav">
-			<li class="navbar-left"><a href='/'><span class="glyphicon glyphicon-home"></span>Home</a></li>
+		<a class="navbar-brand brand" href="#">Quip</a>
 		<?php if($user): ?>
-			<li class="navbar-left"><a href='/posts/users'><span class="glyphicon glyphicon-user"></span>Users</a></li>
-			<li class="navbar-right"><a href='/users/profile'>My Account</a></li>
-			<li class="navbar-right"><a href='/users/logout'><span class="glyphicon glyphicon-off"></span>Logout</a></li>
-		</ul>
+		<ul class="nav navbar-nav navbar-right">
+			<li><a href='/users/profile'><span class="glyphicon glyphicon-user"></span>My Account</a></li>
+			<li><a href='/users/logout'><span class="glyphicon glyphicon-off"></span>Logout</a></li>
+		</ul>	
 		<?php else: ?>
 		</ul>
 			<!-- Inline login on navbar -->
@@ -43,6 +41,18 @@
 			</form>
 		<?php endif; ?>
 	</nav>
+	<?php if($user): ?>
+		<nav id="menu" class="container">
+			<ul class="row">
+				<li class="menu-item"><a href="/">Home</a></li>
+				<li>~</li>
+				<li class="menu-item"><a href="/posts/users">Users</a></li>
+				<li>~</li>
+				<li class="menu-item"><a href="/posts/user/<?php echo $user->user_id ?>">My Profile</a></li>
+			</ul>
+			<hr>
+		</nav>
+	<?php endif ?>
 
 	<!-- Main Content -->
 	<div id="main" class="container">

@@ -10,8 +10,7 @@
 
 <!-- Account not updated-->
 <?php if(isset($error)): ?>
-	<div class="alert alert-danger alert-dismissable">
-		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+	<div class="alert alert-danger">
 		<strong>Account could not be updated</strong> - Correct errors below
 	</div>
 <?php endif; ?>
@@ -122,7 +121,7 @@
   
 	<div class="form-group">
 		<div class="col-md-offset-2 col-md-5">
-			<button type="submit" class="btn btn-primary btn-lg">Update</button>
+			<button type="submit" class="btn btn-info btn-lg">Update</button>
 			or <a href="/">Cancel</a>
 		</div>
 	</div>

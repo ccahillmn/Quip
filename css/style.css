@@ -1,5 +1,7 @@
+/* Defaults */
 body{
 	padding-top:70px;
+	overflow:scroll;
 }
 
 .clear{
@@ -15,18 +17,52 @@ hr{
 	margin-right:20px;
 }
 
+a:link, a:visited{color:#2aabd2;}
+a.btn{color:#fff;}
+
+/********** Navigation **********/
+
+#menu ul{
+	max-width:540px;
+	margin:auto;
+	padding-left:60px;
+}
+
+#menu ul li{
+	float:left;
+	margin:5px 20px 5px 20px;
+	font-size:1.7em;
+	list-style-type:none;
+	color:#2aabd2;
+	}
+
+#menu ul li a:hover{
+	color:#F23DA3;
+	text-decoration:none;
+	}
+
+.menu-item{
+	max-width:140px;
+}
+
 /********** Typography **********/
 
 .center{text-align:center;}
 .right{text-align:right;}
 
 /* Defaults */
-h1, h2, .brand{
+h1, h2, #menu ul li, .brand{
 	font-family: 'Quicksand', sans-serif;
 }
 
 h1{
-	margin-bottom:20px;
+	font-size:3.6em;
+	margin: 5px 0 20px;
+}
+
+h2{
+	font-size:1.70em;
+	margin:5px 0 20px;
 }
 
 p{
@@ -60,16 +96,18 @@ p{
 }
 	
 .user, .post{
-	border-bottom: 1px solid #ddd;
-	margin:10px 0;
-	padding: 10px;
+	border:1px solid #ddd;
+	border-bottom: 2px solid #F23DA3;
+	margin:20px 0;
+	padding: 15px;
+	min-height:90px;
 }
 
 /********** Page Content **********/
 .box{
 	border:1px solid #ddd;
-	border-bottom: 3px solid #2aabd2;
-	margin:10px;
+	border-bottom: 4px solid #2aabd2;
+	margin:20px 0;
 	padding:20px;
 }
 
@@ -81,14 +119,15 @@ p{
 }
 
 .bs-callout-danger{
-	color: #b94a48;
-	background-color: #f2dede;
-	border-color: #ebccd1;
+	color: #731D4D;
+	background-color: #FFA9DC;
+	border-color: #F23DA3;
 }
 
-.bs-callout-info {
-	background-color: #f4f8fa;
-	border-color: #bce8f1;
+.bs-callout-warning {
+	color:#b89963;
+	background-color: #fdf8e4;
+	border-color: #FDF857;
 }
 
 form{
