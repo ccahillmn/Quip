@@ -23,7 +23,7 @@ a.btn{color:#fff;}
 /********** Navigation **********/
 
 #menu ul{
-	max-width:540px;
+	max-width:560px;
 	margin:auto;
 	padding-left:60px;
 }
@@ -44,6 +44,10 @@ a.btn{color:#fff;}
 .menu-item{
 	max-width:140px;
 }
+
+.current{
+	font-weight: 700;
+	}
 
 /********** Typography **********/
 

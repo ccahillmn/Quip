@@ -13,7 +13,7 @@
 	<link rel="stylesheet" href="/css/bootstrap.css" type="text/css">
 	<link rel="stylesheet" href="/css/bootstrap-theme.css" type="text/css">
 	<link rel="stylesheet" href="/css/style.css" type="text/css">
-	<link href='http://fonts.googleapis.com/css?family=Quicksand:400' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Quicksand:400,700' rel='stylesheet' type='text/css'>
 	
 	<?php if(isset($client_files_head)) echo $client_files_head; ?>
 </head>
@@ -44,11 +44,11 @@
 	<?php if($user): ?>
 		<nav id="menu" class="container">
 			<ul class="row">
-				<li class="menu-item"><a href="/">Home</a></li>
+				<li class="menu-item <?php if($_SERVER['PATH_INFO'] == '/posts/') echo 'current'?>"><a href="/">Home</a></li>
 				<li>~</li>
-				<li class="menu-item"><a href="/posts/users">Users</a></li>
+				<li class="menu-item <?php if($_SERVER['PATH_INFO'] == '/posts/users') echo 'current'?>"><a href="/posts/users">Users</a></li>
 				<li>~</li>
-				<li class="menu-item"><a href="/posts/user/<?php echo $user->user_id ?>">My Profile</a></li>
+				<li class="menu-item <?php if($_SERVER['PATH_INFO'] == '/posts/user/'.$user->user_id) echo 'current'?>"><a href="/posts/user/<?php echo $user->user_id ?>">My Profile</a></li>
 			</ul>
 			<hr>
 		</nav>
