@@ -1,4 +1,4 @@
-<h1 class="col-md-offset-2">Quips</h1>
+<h1 class="col-md-offset-2">Quipper</h1>
 <div class="row">
 	<div id="sidebar" class="col-xs-6 col-md-4 col-md-offset-2">
 		<!-- User Profile -->
