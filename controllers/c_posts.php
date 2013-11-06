@@ -228,7 +228,7 @@ class posts_controller extends base_controller {
 	    DB::instance(DB_NAME)->insert('users_users', $data);
 	
 	    # Redirect back to previous page
-		$page_id = ($page_id == users ? "users" : 'user/'.$page_id);
+		$page_id = ($page_id == users ? "users" : 'user/' . $page_id);
 		
 		Router::redirect('/posts/' . $page_id);
 	
@@ -238,7 +238,7 @@ class posts_controller extends base_controller {
 	/*-------------------------------------------------------------------------------------------------
 	Removes the specified row in the users_users table, removing the follow between two users
 	-------------------------------------------------------------------------------------------------*/
-	public function unfollow($user_id_followed) {
+	public function unfollow($user_id_followed,$page_id) {
 	
 	    # Set up the where condition
 	    $where_condition = 'WHERE user_id = '.$this->user->user_id.' AND user_id_followed = '.$user_id_followed;
@@ -246,8 +246,10 @@ class posts_controller extends base_controller {
 	    # Run the delete
 	    DB::instance(DB_NAME)->delete('users_users', $where_condition);
 	
-	    # Send them back
-	    Router::redirect("/posts/users");
+		# Redirect back to previous page
+	    $page_id = ($page_id == users ? "users" : 'user/' . $page_id);
+		
+		Router::redirect('/posts/' . $page_id);
 	
 	}
 

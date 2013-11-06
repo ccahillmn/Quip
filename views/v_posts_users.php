@@ -15,9 +15,9 @@
 				
 					<!-- Display follow button based on connection -->
 					<?php if(isset($connections[$user['user_id']])): ?>
-						<a href='/posts/unfollow/<?=$user['user_id']?>/<?php echo 'user'?>'><button type="button" class="btn btn-danger pull-right">Unfollow</button></a>
+						<a href='/posts/unfollow/<?=$user['user_id']?>/<?php echo 'users'?>'><button type="button" class="btn btn-danger pull-right">Unfollow</button></a>
 					<?php else: ?>
-						<a href='/posts/follow/<?=$user['user_id']?>/<?php echo 'user'?>'><button type="button" class="btn btn-success pull-right">Follow</button></a>
+						<a href='/posts/follow/<?=$user['user_id']?>/<?php echo 'users'?>'><button type="button" class="btn btn-success pull-right">Follow</button></a>
 					<?php endif; ?>	
 					
 					<!-- User Summary -->
