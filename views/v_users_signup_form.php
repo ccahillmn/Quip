@@ -10,7 +10,7 @@
 	
 	<div class="form-group">
 		<label for="first_name">First Name</label>
-		<input type="text" class="form-control" name="first_name" id="exampleInputEmail2" placeholder="First Name" <?php if(isset($_COOKIE['first_name'])): ?>value="<?php echo $_COOKIE['first_name'] ?>"<?php endif ?>>
+		<input type="text" class="form-control" name="first_name" id="first_name" placeholder="First Name" <?php if(isset($_COOKIE['first_name'])): ?>value="<?php echo $_COOKIE['first_name'] ?>"<?php endif ?>>
 	</div>
 	
 	<div class="form-group">

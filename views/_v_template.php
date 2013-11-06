@@ -28,7 +28,6 @@
 			<li><a href='/users/logout'><span class="glyphicon glyphicon-off"></span>Logout</a></li>
 		</ul>	
 		<?php else: ?>
-		</ul>
 			<!-- Inline login on navbar -->
 			<form class="navbar-form navbar-right" method='POST' action='/users/p_login/'>
 				<div class="form-group">
