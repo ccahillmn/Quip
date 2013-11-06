@@ -21,7 +21,7 @@
 <body>	
 	<!-- Sticky top menu -->
 	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-		<a class="navbar-brand brand" href="#">Quip</a>
+		<a class="navbar-brand brand" href="/"><img id="nav_logo" src="/images/logo_white.png" alt="logo">Quip</a>
 		<?php if($user): ?>
 		<ul class="nav navbar-nav navbar-right">
 			<li><a href='/users/profile'><span class="glyphicon glyphicon-user"></span>Update Account</a></li>

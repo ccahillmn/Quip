@@ -48,6 +48,10 @@ a.btn{color:#fff;}
 .current{
 	font-weight: 700;
 	}
+	
+#nav_logo{
+	margin: 0 8px;
+}
 
 /********** Typography **********/
 
