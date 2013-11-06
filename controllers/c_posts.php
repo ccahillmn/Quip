@@ -99,6 +99,14 @@ class posts_controller extends base_controller {
 		# Run query for user info
 		$profile = DB::instance(DB_NAME)->select_row("SELECT * FROM users WHERE user_id = " . $user_id);
 		
+		# Set up query to get all connections from users_users table
+		$q = 'SELECT *
+			FROM users_users
+			WHERE user_id = '.$this->user->user_id;
+			
+		# Run query
+		$connections = DB::instance(DB_NAME)->select_array($q,'user_id_followed');
+		
 		# Diplay add post box if on own profile
 		$add = ($user_id == $this->user->user_id ? true : false);
 		
@@ -109,6 +117,8 @@ class posts_controller extends base_controller {
 		$this->template->content->stream->posts = $posts;
 		$this->template->content->stream->page_id = $user_id;
 		$this->template->content->user_sum->profile = $profile;
+		$this->template->content->user_sum->connections = $connections;
+		$this->template->content->user_sum->page_id = $user_id;
 		$this->template->content->error = $error;
 		$this->template->content->add = $add;
 		
@@ -205,7 +215,7 @@ class posts_controller extends base_controller {
 	/*-------------------------------------------------------------------------------------------------
 	Creates a row in the users_users table representing that one user is following another
 	-------------------------------------------------------------------------------------------------*/
-	public function follow($user_id_followed) {
+	public function follow($user_id_followed,$page_id) {
 	
 	    # Prepare the data array to be inserted
 	    $data = Array(
@@ -217,8 +227,10 @@ class posts_controller extends base_controller {
 	    # Do the insert
 	    DB::instance(DB_NAME)->insert('users_users', $data);
 	
-	    # Send them back
-	    Router::redirect("/posts/users");
+	    # Redirect back to previous page
+		$page_id = ($page_id == users ? "users" : 'user/'.$page_id);
+		
+		Router::redirect('/posts/' . $page_id);
 	
 	}
 	

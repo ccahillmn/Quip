@@ -5,7 +5,7 @@
 </div>
 <?php else : ?>
 	<?php foreach($posts as $post): ?>
-		<div class="post">
+		<div class="post">	
 			<?php if($post['post_user_id'] == $user->user_id): ?>
 				<a href="/posts/delete/<?=$post['post_id']?>/<?php echo $page_id?>"><span alt="Delete Post" title="Delete this post" class="glyphicon glyphicon-remove-circle pull-right"></span></a>
 			<?php endif; ?>
