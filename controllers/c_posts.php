@@ -28,6 +28,7 @@ class posts_controller extends base_controller {
 				posts.content,
 				posts.created,
 				posts.user_id AS post_user_id,
+				posts.post_id,
 				users_users.user_id AS follower_id,
 				users.first_name,
 				users.last_name,
@@ -52,6 +53,7 @@ class posts_controller extends base_controller {
 		$this->template->content->user_sum = View::instance('v_users_user');
 		$this->template->content->add_post = View::instance('v_posts_add');
 		$this->template->content->stream->posts = $posts;
+		$this->template->content->stream->page_id = 'index';
 		$this->template->content->user_sum->profile= $profile;
 		$this->template->content->error = $error;
 		
@@ -104,10 +106,11 @@ class posts_controller extends base_controller {
 		$this->template->content->user_sum = View::instance('v_users_user');
 		$this->template->content->add_post = View::instance('v_posts_add');
 		$this->template->content->stream->posts = $posts;
+		$this->template->content->stream->page_id = $user_id;
 		$this->template->content->user_sum->profile = $profile;
 		$this->template->content->error = $error;
 		$this->template->content->add = $add;
-		$this->template->content->stream->page_id = 'profile';
+		
 		
 		# Render view
 		echo $this->template;
