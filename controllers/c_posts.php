@@ -157,6 +157,8 @@ class posts_controller extends base_controller {
 	    DB::instance(DB_NAME)->delete('posts', $where_condition);
 		
 		# Redirect back to previous page
+		$page_id = ($page_id == index ? "index" : 'user/'.$page_id);
+		
 		Router::redirect('/posts/' . $page_id);
 	
 
