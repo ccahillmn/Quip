@@ -24,24 +24,22 @@ class posts_controller extends base_controller {
 		$this->template->content = View::instance('v_posts_index');
 
 		# Set up query for posts
-		$q = 'SELECT 
-			    posts.content,
-			    posts.created,
-			    posts.user_id AS post_user_id,
-				posts.post_id,
-			    users_users.user_id AS follower_id,
-			    users.first_name,
-			    users.last_name,
+		$q = 'SELECT  
+				posts.content,
+				posts.created,
+				posts.user_id AS post_user_id,
+				users_users.user_id AS follower_id,
+				users.first_name,
+				users.last_name,
 				users.photo
 			FROM posts
 			INNER JOIN users_users 
-			    ON posts.user_id = users_users.user_id_followed
+				ON posts.user_id = users_users.user_id_followed
 			INNER JOIN users 
-			    ON posts.user_id = users.user_id
-			WHERE users_users.user_id = '.$this->user->user_id . ' 
-			OR posts.user_id = '.$this->user->user_id . '
-			GROUP BY posts.post_id
-			ORDER BY posts.created DESC';
+				ON posts.user_id = users.user_id
+			WHERE users_users.user_id =' . $this->user->user_id . '
+			OR posts.user_id =' . $this->user->user_id . '
+			GROUP BY posts.post_id';
 		
 		# Run query	for posts
 		$posts = DB::instance(DB_NAME)->select_rows($q);
@@ -109,6 +107,7 @@ class posts_controller extends base_controller {
 		$this->template->content->user_sum->profile = $profile;
 		$this->template->content->error = $error;
 		$this->template->content->add = $add;
+		$this->template->content->stream->page_id = 'profile';
 		
 		# Render view
 		echo $this->template;
@@ -149,7 +148,7 @@ class posts_controller extends base_controller {
 	/*-------------------------------------------------------------------------------------------------
 	Delete a post
 	-------------------------------------------------------------------------------------------------*/
-	public function delete($post_id, $user_id) {
+	public function delete($post_id, $page_id) {
 	
 		# Set up the where condition
 	    $where_condition = 'WHERE post_id = '.$post_id;
@@ -158,7 +157,7 @@ class posts_controller extends base_controller {
 	    DB::instance(DB_NAME)->delete('posts', $where_condition);
 		
 		# Redirect back to previous page
-		$page_id = (isset($user_id) ? 'user/'.$user_id : "");
+		$page_id = (isset($page_id) ? 'user/'.$page_id : "");
 		
 		Router::redirect('/posts/'.$page_id);
 	
