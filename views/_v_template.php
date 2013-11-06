@@ -44,11 +44,11 @@
 	<?php if($user): ?>
 		<nav id="menu" class="container">
 			<ul class="row">
-				<li class="menu-item <?php if($_SERVER['PATH_INFO'] == '/posts/') echo 'current'?>"><a href="/">Home</a></li>
+				<li class="menu-item <?php if($_SERVER['ORIG_PATH_INFO'] == '/posts/') echo 'current'?>"><a href="/">Home</a></li>
 				<li>~</li>
-				<li class="menu-item <?php if($_SERVER['PATH_INFO'] == '/posts/users') echo 'current'?>"><a href="/posts/users">Users</a></li>
+				<li class="menu-item <?php if($_SERVER['ORIG_PATH_INFO'] == '/posts/users') echo 'current'?>"><a href="/posts/users">Users</a></li>
 				<li>~</li>
-				<li class="menu-item <?php if($_SERVER['PATH_INFO'] == '/posts/user/'.$user->user_id) echo 'current'?>"><a href="/posts/user/<?php echo $user->user_id ?>">My Profile</a></li>
+				<li class="menu-item <?php if($_SERVER['ORIG_PATH_INFO'] == '/posts/user/'.$user->user_id) echo 'current'?>"><a href="/posts/user/<?php echo $user->user_id ?>">My Profile</a></li>
 			</ul>
 			<hr>
 		</nav>

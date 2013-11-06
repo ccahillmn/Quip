@@ -143,7 +143,6 @@ class posts_controller extends base_controller {
 			DB::instance(DB_NAME)->insert_row('posts', $data);
 			
 			# Redirect back to previous page
-			
 			Router::redirect($_POST['page_id']);
 		}
 		
