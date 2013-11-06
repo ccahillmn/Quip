@@ -22,10 +22,8 @@ class posts_controller extends base_controller {
 		
 		# Set up view
 		$this->template->content = View::instance('v_posts_index');
-		
-		#Display add post box
 
-		# Set up query
+		# Set up query for posts
 		$q = 'SELECT 
 			    posts.content,
 			    posts.created,
@@ -45,15 +43,20 @@ class posts_controller extends base_controller {
 			GROUP BY posts.post_id
 			ORDER BY posts.created DESC';
 		
-		# Run query	
+		# Run query	for posts
 		$posts = DB::instance(DB_NAME)->select_rows($q);
 		
+		# Run query for user info
+		$profile = DB::instance(DB_NAME)->select_row("SELECT * FROM users WHERE user_id = " . $this->user->user_id);
+		
 		# Pass data to the view
-		$this->template->content->posts = $posts;
+		$this->template->content->stream = View::instance('v_posts_stream');
 		$this->template->content->user_sum = View::instance('v_users_user');
+		$this->template->content->add_post = View::instance('v_posts_add');
+		$this->template->content->stream->posts = $posts;
+		$this->template->content->user_sum->profile= $profile;
 		$this->template->content->error = $error;
-		$this->template->content->add = $add;
-		$this->template->content->page_id = "";
+		
 		
 		# Render view
 		echo $this->template;
@@ -71,7 +74,7 @@ class posts_controller extends base_controller {
 		}
 		
 		# Set up view
-		$this->template->content = View::instance('v_posts_index');
+		$this->template->content = View::instance('v_posts_profile');
 
 		# Set up query
 		$q = 'SELECT 
@@ -85,21 +88,27 @@ class posts_controller extends base_controller {
 			FROM posts
 			INNER JOIN users 
 			    ON posts.user_id = users.user_id
-			WHERE posts.user_id = '. $user_id . '
+			WHERE posts.user_id = '.$user_id . ' 
+			OR posts.user_id = '.$user_id . '
 			ORDER BY posts.created DESC';
 		
-		# Run query	
+		# Run query	for posts
 		$posts = DB::instance(DB_NAME)->select_rows($q);
+		
+		# Run query for user info
+		$profile = DB::instance(DB_NAME)->select_row("SELECT * FROM users WHERE user_id = " . $user_id);
 		
 		# Diplay add post box if on own profile
 		$add = ($user_id == $this->user->user_id ? true : false);
 		
 		# Pass data to the view
-		$this->template->content->posts = $posts;
+		$this->template->content->stream = View::instance('v_posts_stream');
 		$this->template->content->user_sum = View::instance('v_users_user');
+		$this->template->content->add_post = View::instance('v_posts_add');
+		$this->template->content->stream->posts = $posts;
+		$this->template->content->user_sum->profile = $profile;
 		$this->template->content->error = $error;
 		$this->template->content->add = $add;
-		$this->template->content->page_id = $user_id;
 		
 		# Render view
 		echo $this->template;
@@ -132,7 +141,7 @@ class posts_controller extends base_controller {
 			
 			# Redirect back to previous page
 			
-			Router::redirect('/posts/user/'.$_POST['page_id']);
+			Router::redirect($_POST['page_id']);
 		}
 		
 	}

@@ -4,7 +4,8 @@
 		<div id="sidebar" class="col-xs-6 col-md-4 col-md-offset-2">
 			<!-- User Profile -->
 			<div class="box">
-				<?=$user_sum?>
+				<h2>Following</h2>
+				<p>Click the <strong>"Follow"</strong> button next to a user to add them to your stream; click <strong>"Unfollow"</strong> to stop seeing their quips. Click on a user's name to view their profile, including quips.</p>
 			</div>
 		</div>
 		

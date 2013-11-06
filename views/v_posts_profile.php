@@ -5,12 +5,13 @@
 		<div class="box">
 			<?=$user_sum?>
 		</div>
-		<!-- Add a post -->
-		<div class="box">
-			<?=$add_post?>
-		</div>
+		<!-- Add a post if on own profile -->
+		<?php if($add == true): ?>
+			<div class="box">
+				<?=$add_post?>
+			</div>
+		<?php endif ?>
 	</div>
-	
 	<!-- Stream of posts -->
 	<div id="stream" class="col-xs-6 col-md-5">
 		<?=$stream?>
