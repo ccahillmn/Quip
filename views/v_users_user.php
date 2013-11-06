@@ -7,7 +7,7 @@
 	<?php endif; ?>
 <?php endif ?>
 
-<img src="/uploads/avatars/<?php echo $profile['photo'] ?>" class="avatar img-circle"/>
+<img src="/uploads/avatars/<?php echo $profile['photo'] ?>" class="avatar img-circle" alt="<?=$profile['first_name'] ?> <?=$profile['last_name'] ?>"/>
 <strong><a href="/posts/user/<?=$profile['user_id'] ?>"><?=$profile['first_name'] ?> <?=$profile['last_name'] ?></a></strong><br>
 
 <!-- if website set -->
