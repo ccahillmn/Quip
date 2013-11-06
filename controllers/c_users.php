@@ -29,6 +29,9 @@ class users_controller extends base_controller {
     -------------------------------------------------------------------------------------------------*/
     public function p_signup() {
 		
+		// Sanitize user input
+		$_POST = DB::instance(DB_NAME)->sanitize($_POST);
+		
 		// Check for existing account
 		$exists = DB::instance(DB_NAME)->select_field("SELECT email FROM users WHERE email = '" . $_POST['email'] . "'");
 
@@ -140,6 +143,9 @@ class users_controller extends base_controller {
     Process the login form
     -------------------------------------------------------------------------------------------------*/
     public function p_login() {
+	
+		// Sanitize user input
+		$_POST = DB::instance(DB_NAME)->sanitize($_POST);
 	   	   
 	   	# Hash the password they entered so we can compare it with the ones in the database
 		$_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
@@ -216,6 +222,9 @@ class users_controller extends base_controller {
 	-------------------------------------------------------------------------------------------------*/
     public function p_profile() {
 	
+		// Sanitize user input
+		$_POST = DB::instance(DB_NAME)->sanitize($_POST);
+	
 		// Validate input
 
 		#if any required fields are empty, return error
@@ -223,7 +232,6 @@ class users_controller extends base_controller {
 			$error = true;
 			$blank = 'blank=blank';
 		}
-		
 		
 		if(isset($_POST['email'])){
 		
