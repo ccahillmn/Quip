@@ -16,6 +16,5 @@
 	<div id="stream" class="col-xs-6 col-md-5">
 		<?=$stream?>
 	</div>
-	
 </div>
 

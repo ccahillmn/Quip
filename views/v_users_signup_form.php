@@ -43,10 +43,13 @@
 		<label for="password">Password</label>
 		<input type="password" class="form-control" name="password" id="password" placeholder="Password">
 	</div>
+	
 	<div class="form-group">
 		<label for="password2">Repeat Password</label>
 		<input type="password" class="form-control" name ="password2" id="password2" placeholder="Repeat Password">
 	</div>
+	
 	<button type="submit" class="btn btn-info btn-lg pull-right">Sign up</button>
+	
 </form>
 <p class="helptext">Have an account already? <a href="/users/login">Login</a>

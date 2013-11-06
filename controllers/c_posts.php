@@ -50,14 +50,14 @@ class posts_controller extends base_controller {
 		$profile = DB::instance(DB_NAME)->select_row("SELECT * FROM users WHERE user_id = " . $this->user->user_id);
 		
 		# Pass data to the view
-		$this->template->content->stream = View::instance('v_posts_stream');
-		$this->template->content->user_sum = View::instance('v_users_user');
-		$this->template->content->add_post = View::instance('v_posts_add');
-		$this->template->content->stream->posts = $posts;
-		$this->template->content->stream->page_id = 'index';
-		$this->template->content->user_sum->profile= $profile;
-		$this->template->content->error = $error;
-		
+		$this->template->content->stream            = View::instance('v_posts_stream');
+		$this->template->content->user_sum          = View::instance('v_users_user');
+		$this->template->content->add_post          = View::instance('v_posts_add');
+		$this->template->content->stream->posts     = $posts;
+		$this->template->content->stream->page_id   = 'index';
+		$this->template->content->user_sum->profile = $profile;
+		$this->template->content->error             = $error;
+		$this->template->title                      = "Your Stream";
 		
 		# Render view
 		echo $this->template;
@@ -111,17 +111,16 @@ class posts_controller extends base_controller {
 		$add = ($user_id == $this->user->user_id ? true : false);
 		
 		# Pass data to the view
-		$this->template->content->stream = View::instance('v_posts_stream');
-		$this->template->content->user_sum = View::instance('v_users_user');
-		$this->template->content->add_post = View::instance('v_posts_add');
-		$this->template->content->stream->posts = $posts;
-		$this->template->content->stream->page_id = $user_id;
-		$this->template->content->user_sum->profile = $profile;
+		$this->template->content->stream                = View::instance('v_posts_stream');
+		$this->template->content->user_sum              = View::instance('v_users_user');
+		$this->template->content->add_post              = View::instance('v_posts_add');
+		$this->template->content->stream->posts         = $posts;
+		$this->template->content->stream->page_id       = $user_id;
+		$this->template->content->user_sum->profile     = $profile;
 		$this->template->content->user_sum->connections = $connections;
-		$this->template->content->user_sum->page_id = $user_id;
-		$this->template->content->error = $error;
-		$this->template->content->add = $add;
-		
+		$this->template->content->user_sum->page_id     = $user_id;
+		$this->template->content->error                 = $error;
+		$this->template->content->add                   = $add;
 		
 		# Render view
 		echo $this->template;
@@ -203,9 +202,10 @@ class posts_controller extends base_controller {
 		$connections = DB::instance(DB_NAME)->select_array($q,'user_id_followed');
 		
 		# Pass data to the view
-		$this->template->content->users = $users;
+		$this->template->content->users       = $users;
 		$this->template->content->connections = $connections;
-		$this->template->content->user_sum = View::instance('v_users_user');
+		$this->template->content->user_sum    = View::instance('v_users_user');
+		$this->template->title                = "Quippers";
 		
 		# Render view
 		echo $this->template;

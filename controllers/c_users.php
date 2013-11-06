@@ -15,11 +15,13 @@ class users_controller extends base_controller {
     -------------------------------------------------------------------------------------------------*/
 	public function signup($error = NULL) {
 	
-		$this->template->content = View::instance('v_users_signup'); 
+		# Pass data to view
+		$this->template->content         = View::instance('v_users_signup'); 
 		$this->template->content->signup = View::instance('v_users_signup_form');
-		$this->template->title = "Sign up";
-		$this->template->content->error = $error;
+		$this->template->title           = "Sign up";
+		$this->template->content->error  = $error;
 		
+		# Display view
     	echo $this->template;   
 		
 	}
@@ -29,10 +31,10 @@ class users_controller extends base_controller {
     -------------------------------------------------------------------------------------------------*/
     public function p_signup() {
 		
-		// Sanitize user input
+		# Sanitize user input
 		$_POST = DB::instance(DB_NAME)->sanitize($_POST);
 		
-		// Check for existing account
+		# Check for existing account
 		$exists = DB::instance(DB_NAME)->select_field("SELECT email FROM users WHERE email = '" . $_POST['email'] . "'");
 
 		if (isset($exists)) {
@@ -40,6 +42,7 @@ class users_controller extends base_controller {
 		}
 		
 		// Validate form input
+		
 		else{
 		
 			#initialize error
@@ -69,13 +72,13 @@ class users_controller extends base_controller {
 			}
 			
 			$data = Array(
-			'first_name' => $_POST['first_name'],
-			'last_name' => $_POST['last_name'],
-			'email' => $_POST['email'],
+				'first_name' => $_POST['first_name'],
+				'last_name'  => $_POST['last_name'],
+				'email'      => $_POST['email'],
 			);
 			
+			# Remember entered data on error redirect
 			if ($error == true){
-				# Remember entered data
 				foreach ($data as $field => $value){
 					setcookie($field, $value, strtotime( time()+3600), '/');
 				}
@@ -101,11 +104,11 @@ class users_controller extends base_controller {
 		
 		$data = Array(
 				'first_name' => $first_name,
-				'last_name' => $last_name,
-				'email' => $email,
-				'password' => $password,
-				'created' => $created,
-				'token' => $token
+				'last_name'  => $last_name,
+				'email'      => $email,
+				'password'   => $password,
+				'created'    => $created,
+				'token'      => $token
 			);
 		
 		//Create account
@@ -127,9 +130,10 @@ class users_controller extends base_controller {
 	Display a form so users can login
 	-------------------------------------------------------------------------------------------------*/
     public function login($error = NULL) {
-    
-    	$this->template->content = View::instance('v_users_login'); 
-		$this->template->title = "Login to Quip";
+	
+		# Send data to view
+    	$this->template->content        = View::instance('v_users_login'); 
+		$this->template->title          = "Login to Quip";
 		$this->template->content->error = $error;
 
 		# Provide sign-up option for those who landed on the wrong page
@@ -186,7 +190,7 @@ class users_controller extends base_controller {
        
        # Update their row in the DB with the new token
        $data = Array(
-       	'token' => $new_token
+			'token' => $new_token
        );
 	   
        DB::instance(DB_NAME)->update('users',$data, 'WHERE user_id ='. $this->user->user_id);
@@ -209,9 +213,9 @@ class users_controller extends base_controller {
 			Router::redirect('/?acct=false');
 		}
 		
-		$this->template->content = View::instance('v_users_profile');
-		$this->template->title   = "Update Profile";
-		$this->template->content->error 	 = $error;
+		$this->template->content        = View::instance('v_users_profile');
+		$this->template->title          = "Update Profile";
+		$this->template->content->error = $error;
 		
 		echo $this->template;
 				
@@ -312,10 +316,10 @@ class users_controller extends base_controller {
 		
 		$data = Array(
 			'first_name' => strip_tags(htmlentities(stripslashes(nl2br($_POST['first_name'])),ENT_NOQUOTES,"Utf-8")),
-			'last_name' => strip_tags(htmlentities(stripslashes(nl2br($_POST['last_name'])),ENT_NOQUOTES,"Utf-8")),
-			'email' => $email,
-			'bio' => strip_tags(htmlentities(stripslashes(nl2br($_POST['bio'])),ENT_NOQUOTES,"Utf-8")),
-			'website' => $website,
+			'last_name'  => strip_tags(htmlentities(stripslashes(nl2br($_POST['last_name'])),ENT_NOQUOTES,"Utf-8")),
+			'email'      => $email,
+			'bio'        => strip_tags(htmlentities(stripslashes(nl2br($_POST['bio'])),ENT_NOQUOTES,"Utf-8")),
+			'website'    => $website,
 		);
 		
 		// Update if no errors
@@ -329,6 +333,7 @@ class users_controller extends base_controller {
 			# Redirect to error page with relevant messages
 			Router::redirect('/users/profile/error?' . $blank . '&' . $mail . '&' . $pw . '&' . $url . '&' . $file);
 		}
+		
 		else{
 			DB::instance(DB_NAME)->update('users',$data, 'WHERE user_id ='. $this->user->user_id);
 			

@@ -17,7 +17,6 @@
 	
 	<?php if(isset($client_files_head)) echo $client_files_head; ?>
 </head>
-
 <body>	
 	<!-- Sticky top menu -->
 	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">

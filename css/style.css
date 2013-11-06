@@ -17,10 +17,17 @@ hr{
 	margin-right:20px;
 }
 
-a:link, a:visited{color:#2aabd2;}
-a.btn{color:#fff;}
+a:link, a:visited{
+	color:#2aabd2;
+}
 
-/********** Navigation **********/
+a.btn{
+	color:#fff;
+}
+
+/*-------------------------------------------------------------------------------------------------
+Navigation
+-------------------------------------------------------------------------------------------------*/
 
 #menu ul{
 	max-width:560px;
@@ -34,12 +41,12 @@ a.btn{color:#fff;}
 	font-size:1.7em;
 	list-style-type:none;
 	color:#2aabd2;
-	}
+}
 
 #menu ul li a:hover{
 	color:#F23DA3;
 	text-decoration:none;
-	}
+}
 
 .menu-item{
 	max-width:140px;
@@ -47,18 +54,25 @@ a.btn{color:#fff;}
 
 .current{
 	font-weight: 700;
-	}
+}
 	
 #nav_logo{
 	margin: 0 8px;
 }
 
-/********** Typography **********/
+/*-------------------------------------------------------------------------------------------------
+Typography
+-------------------------------------------------------------------------------------------------*/
 
-.center{text-align:center;}
-.right{text-align:right;}
+.center{
+	text-align:center;
+}
 
-/* Defaults */
+.right{
+	text-align:right;
+}
+
+
 h1, h2, #menu ul li, .brand{
 	font-family: 'Quicksand', sans-serif;
 }
@@ -78,7 +92,6 @@ p{
 	text-align:justify;
 }
 
-/* Classes */
 
 .glyphicon{
 	margin:0 5px;
@@ -90,9 +103,11 @@ p{
 
 .helptext{
 	margin-bottom:25px;
-	}
+}
 
-/********** Stream **********/
+/*-------------------------------------------------------------------------------------------------
+Streams
+-------------------------------------------------------------------------------------------------*/
 .avatar{
 	height:50px;
 	width:50px;
@@ -112,7 +127,9 @@ p{
 	min-height:90px;
 }
 
-/********** Page Content **********/
+/*-------------------------------------------------------------------------------------------------
+Page Content
+-------------------------------------------------------------------------------------------------*/
 .box{
 	border:1px solid #ddd;
 	border-bottom: 4px solid #2aabd2;
@@ -158,5 +175,5 @@ footer{
 
 #pitch.container{
 	max-width:750px;
-	}
+}
 

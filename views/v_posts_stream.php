@@ -9,7 +9,7 @@
 			<?php if($post['post_user_id'] == $user->user_id): ?>
 				<a href="/posts/delete/<?=$post['post_id']?>/<?php echo $page_id?>"><span alt="Delete Post" title="Delete this post" class="glyphicon glyphicon-remove-circle pull-right"></span></a>
 			<?php endif; ?>
-			<p><?=$post['content']?><img src="/uploads/avatars/<?=$post['photo']?>" class="avatar img-circle" alt="<?=$post['first_name']?><?=$post['last_name']?>/></p>
+			<p><?=$post['content']?><img src="/uploads/avatars/<?=$post['photo']?>" class="avatar img-circle" alt="<?=$post['first_name']?><?=$post['last_name']?>"/></p>
 			<p class="meta">
 				Posted by <a href="/posts/user/<?=$post['post_user_id']?>"><em>
 				<?php if($post['post_user_id'] == $user->user_id): ?>
